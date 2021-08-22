@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ghost.GhostTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2020-11-21T15:22:14" hostname="DESKTOP-JR70JIC" time="0.026">
+  <properties/>
+  <testcase name="testGhostTurnUp()" classname="ghost.GhostTest" time="0.002"/>
+  <testcase name="testChaseMode()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testBound()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testReset()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTurnRight()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTickRight()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTurnDown()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTurnLeft()" classname="ghost.GhostTest" time="0.0"/>
+  <testcase name="testScatterMode()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testcheckNextMove()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testWakaGhostCollide()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testFrightenMode()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testSetterGetter()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="checkIntersection()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testSodaMode()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTickDown()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTickLeft()" classname="ghost.GhostTest" time="0.001"/>
+  <testcase name="testGhostTickUp()" classname="ghost.GhostTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

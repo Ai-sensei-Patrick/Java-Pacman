@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Whim.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">Whim.java</span></div><h1>Whim.java</h1><pre class="source lang-java linenums">package ghost;
+import processing.core.PApplet;
+import processing.core.PImage;
+
+public class Whim extends Ghost{
+
+    private Ghost chaser;
+    
+    /**
+     * Store Whim intial position, Whim x/y pixels, all image of Whim in different mode, Whim current image,Ambusher x/y coordinate 
+     * frameRate, Whim previous mode, duration scatter mode, duration chaser mode, Whim speed, duration frighten mode,
+     * direction of Whim, Whim target x/y ,indicate to draw line ,Chaser ghost.
+     *
+     * @param type Whim.
+     * @param image Image of Whim in normal mode.
+     * @param waka Waka object.
+     * @param fImage Image of Whim on frighten mode.
+     * @param targetX Initial target of Whim (Corner of map (Xcoordinate))
+     * @param targetY Initial target of Whim (Corner of map (Ycoordinate))
+     * @param sImage Image of whim on Soda mode.
+     */
+    public Whim(String type,PImage image, Waka waka, int targetX, int targetY, PImage fImage,PImage sImage){
+<span class="fc" id="L23">        super(type,image,waka,targetX,targetY,fImage,sImage);</span>
+<span class="fc" id="L24">        this.chaser = null;</span>
+<span class="fc" id="L25">    }</span>
+
+    public Ghost getChaser(){
+<span class="fc" id="L28">        return this.chaser;</span>
+    }
+
+    /**
+     * Set chaser for the whim. 
+     * 
+     * @param chaser Chaser Object.
+     */
+    public void setChaser(Ghost chaser){
+<span class="fc" id="L37">        this.chaser = chaser;</span>
+<span class="fc" id="L38">    }</span>
+
+    /**
+     * If Whim in chase mode, check for chaser existence, If chaser exist take 
+     * chaser Xcoordinate and waka Xcoordinate then add/subtract waka Xcoordinate or waka Ycoordinate by 2 and this depend on the direction waka.
+     * then use this formula to calculate TargetX/Y: waka coordinate * 2 - chaser coordinate.
+     * If chaser doesn't exist use waka Xcoordinate as target X and waka Ycoordinate as target Y.
+     * &lt;p&gt;
+     * If Whim in scatter mode, set ghost targetX to 27 and set ghost targetY to 35.
+     * 
+     */
+    public void checkTarget(){
+<span class="fc" id="L50">        int chaserX = this.chaser.getX();</span>
+<span class="fc" id="L51">        int chaserY = this.chaser.getY();</span>
+<span class="fc" id="L52">        int wakaX = this.waka.getX();</span>
+<span class="fc" id="L53">        int wakaY = this.waka.getY();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if(this.mode.equals(&quot;Chase&quot;)){</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            if(!this.noChaser){</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">                if(this.waka.getDirection().equals(&quot;Left&quot;)){</span>
+<span class="fc" id="L57">                    this.targetX = this.checkBoundX(((wakaX - 2) * 2) - chaserX);</span>
+<span class="fc" id="L58">                    this.targetY = this.checkBoundY((wakaY * 2) - chaserY);</span>
+                }
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                else if(this.waka.getDirection().equals(&quot;Right&quot;)){</span>
+<span class="fc" id="L61">                    this.targetX = this.checkBoundX(((wakaX + 2) * 2) - chaserX);</span>
+<span class="fc" id="L62">                    this.targetY = this.checkBoundY((wakaY * 2) - chaserY);</span>
+                }
+<span class="fc bfc" id="L64" title="All 2 branches covered.">                else if(this.waka.getDirection().equals(&quot;Up&quot;)){</span>
+<span class="fc" id="L65">                    this.targetX = this.checkBoundX((wakaX * 2) - chaserX);</span>
+<span class="fc" id="L66">                    this.targetY = this.checkBoundY(((wakaY - 2) * 2) - chaserY);</span>
+                }
+                else{
+<span class="fc" id="L69">                    this.targetX = this.checkBoundX((wakaX * 2) - chaserX);</span>
+<span class="fc" id="L70">                    this.targetY = this.checkBoundY(((wakaY + 2) * 2) - chaserY);</span>
+                }
+            }else{
+<span class="fc" id="L73">                this.targetX = wakaX;</span>
+<span class="fc" id="L74">                this.targetY = wakaY;</span>
+            }
+        }else{
+<span class="fc" id="L77">            this.targetY = 35;</span>
+<span class="fc" id="L78">            this.targetX = 27;</span>
+        }
+<span class="fc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

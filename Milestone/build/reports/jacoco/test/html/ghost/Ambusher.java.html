@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ambusher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">Ambusher.java</span></div><h1>Ambusher.java</h1><pre class="source lang-java linenums">package ghost;
+import processing.core.PApplet;
+import processing.core.PImage;
+
+public class Ambusher extends Ghost{
+
+    /**
+     * Store Ambusher intial position, Ambusher x/y pixels, all image of Ambusher in different mode, Ambusher current image,Ambusher x/y coordinate
+     * frameRate, Ambusher previous mode, duration scatter mode, duration chaser mode, Ambusher speed, duration frighten mode,
+     * direction of Ambusher, Ambusher target x/y, and indicate to draw line.
+     *
+     * @param type Ambusher.
+     * @param image Image of Ambusher in normal mode.
+     * @param waka Waka object.
+     * @param fImage Image of Ambusher on frighten mode.
+     * @param targetX Initial target of Ambusher (Corner of map (Xcoordinate))
+     * @param targetY Initial target of Ambusher (Corner of map (Ycoordinate))
+     * @param sImage Image of Ambusher on Soda mode.
+     */
+    public Ambusher(String type,PImage image, Waka waka, int targetX, int targetY, PImage fImage, PImage sImage){
+<span class="fc" id="L21">        super(type,image,waka,targetX,targetY,fImage,sImage);</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * If Ambusher in chase mode, take waka Xcoordinate add/subtract (depend on waka direction) it by 4 coordinate a head waka direction.
+     * Check for their bound also, than set that results to ghost targetX and targetY position.
+     * &lt;p&gt;
+     * If Ambusher in scatter mode, set ghost targetX to 27 and set ghost targetY to 0.
+     * 
+     */
+    public void checkTarget(){
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        if(this.mode.equals(&quot;Chase&quot;)){</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if (this.waka.getDirection().equals(&quot;Up&quot;)){</span>
+<span class="fc" id="L34">                this.targetY = this.checkBoundY(this.waka.getY() - 4);</span>
+            }
+<span class="fc bfc" id="L36" title="All 2 branches covered.">            else if (this.waka.getDirection().equals(&quot;Down&quot;)){</span>
+<span class="fc" id="L37">                this.targetY = this.checkBoundY(this.waka.getY() + 4);</span>
+            }
+            else{
+<span class="fc" id="L40">                this.targetY = this.waka.getY();</span>
+            }
+        }else{
+<span class="fc" id="L43">            this.targetY = 0;</span>
+        }
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if(this.mode.equals(&quot;Chase&quot;)){</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if(this.waka.getDirection().equals(&quot;Left&quot;)){</span>
+<span class="fc" id="L47">                this.targetX = this.checkBoundX(this.waka.getX() - 4);</span>
+            }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            else if(this.waka.getDirection().equals(&quot;Right&quot;)){</span>
+<span class="fc" id="L50">                this.targetX = this.checkBoundX(this.waka.getX() + 4);</span>
+            }
+            else{
+<span class="fc" id="L53">                this.targetX = this.waka.getX();</span>
+            }
+        }else{
+<span class="fc" id="L56">            this.targetX = 27;</span>
+        }
+<span class="fc" id="L58">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

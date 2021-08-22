@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ghost.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">Ghost.java</span></div><h1>Ghost.java</h1><pre class="source lang-java linenums">package ghost;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import java.util.*;
+import org.json.simple.JSONArray;
+import java.lang.*;
+
+public abstract class Ghost implements Character{
+    /**
+     * Type of the ghost.
+     */
+    protected String type;
+    /**
+     * Ghost image in normal mode.
+     */
+    protected PImage image;
+    /**
+     * Ghost image in soda mode.
+     */
+    protected PImage sImage;
+    /**
+     * Ghost image in frighten mode.
+     */
+    protected PImage fImage;
+    /**
+     * Ghost current image.
+     */
+    protected PImage currentImage;
+    /**
+     * Ghost Xcoordinate in grid.
+     */
+    protected int xVariable;
+    /**
+     * Ghost Ycoordinate in grid.
+     */
+    protected int yVariable;
+    /**
+     * Ghost Xpixels.
+     */
+    protected int xPixels;
+    /**
+     * Ghost Ypixels.
+     */
+    protected int yPixels;
+    /**
+     * Ghost speed.
+     */
+    protected long speed;
+    /**
+     * Framerate for ghost.
+     */
+    protected int frameRate;
+    /**
+     * Ghost current mode.
+     */
+    protected String mode;
+    /**
+     * Duration of ghost for chaser mode.
+     */
+    protected long durationChase;
+    /**
+     * Duration of ghost in scatter mode.
+     */
+    protected long durationScatter;
+    /**
+     * Duration of ghost in frighten mode.
+     */
+    protected long durationFrighten;
+    /**
+     * Duration of ghost in soda mode.
+     */
+    protected long durationSoda;
+    /**
+     * Ghost target Xcoordinate.
+     */
+    protected int targetX;
+    /**
+     * Ghost target Ycoordinate.
+     */
+    protected int targetY;
+    /**
+     * Waka Object.
+     */
+    protected Waka waka;
+    /**
+     * Ghost current direction.
+     */
+    protected String direction;
+    /**
+     * Boolean to indicate draw DEBUG line.
+     */
+    protected boolean drawLine;
+    /**
+     * Boolean to indicate collision between ghost and waka.
+     */
+    protected boolean collide;
+    /**
+     * Ghost previous mode.
+     */
+    protected String pMode;
+    /**
+     * Ghost starting Xcoordinate.
+     */
+    protected int startX;
+    /**
+     * Ghost starting Ycoordinate.
+     */
+    protected int startY;
+    /**
+     * Boolean for chaser existence.
+     */
+    protected boolean noChaser;
+
+
+    /**
+     * Store ghost intial position, ghost x/y pixels, all image of ghost in different mode, ghost current image,ghost x/y coordinate 
+     * frameRate, ghost previous mode, duration scatter mode, duration chaser mode, ghost speed, duration frighten mode,
+     * direction of ghost, ghost target x/y and indicate to draw line.
+     *
+     * @param type Type of ghost.
+     * @param image Image of ghost in normal mode.
+     * @param waka Waka object.
+     * @param fImage Image of ghost on frighten mode.
+     * @param sImage Image of ghost on soda mode.
+     * @param targetX Initial target of ghost (Corner of map (Xcoordinate)).
+     * @param targetY Initial target of ghost (Corner of map (Ycoordinate)).
+     */
+<span class="fc" id="L129">    public Ghost(String type,PImage image, Waka waka,int targetX,int targetY,PImage fImage,PImage sImage){</span>
+<span class="fc" id="L130">        this.type = type;</span>
+<span class="fc" id="L131">        this.waka = waka;</span>
+<span class="fc" id="L132">        this.image = image;</span>
+<span class="fc" id="L133">        this.currentImage = image;</span>
+<span class="fc" id="L134">        this.fImage = fImage;</span>
+<span class="fc" id="L135">        this.sImage = sImage;</span>
+<span class="fc" id="L136">        this.mode = &quot;Scatter&quot;;</span>
+<span class="fc" id="L137">        this.pMode = &quot;Scatter&quot;;</span>
+<span class="fc" id="L138">        this.xVariable = 0;</span>
+<span class="fc" id="L139">        this.yVariable = 0;</span>
+<span class="fc" id="L140">        this.yPixels = 0;</span>
+<span class="fc" id="L141">        this.xPixels = 0;</span>
+<span class="fc" id="L142">        this.speed = 0;</span>
+<span class="fc" id="L143">        this.durationSoda = 0;</span>
+<span class="fc" id="L144">        this.durationScatter = 0;</span>
+<span class="fc" id="L145">        this.durationChase = 0;</span>
+<span class="fc" id="L146">        this.durationFrighten = 0;</span>
+<span class="fc" id="L147">        this.frameRate = 0;</span>
+<span class="fc" id="L148">        this.targetX = targetX;</span>
+<span class="fc" id="L149">        this.targetY = targetY;</span>
+<span class="fc" id="L150">        this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L151">        this.drawLine = false;</span>
+<span class="fc" id="L152">        this.startX = 0;</span>
+<span class="fc" id="L153">        this.startY = 0;</span>
+<span class="fc" id="L154">        this.noChaser = false;</span>
+<span class="fc" id="L155">    }</span>
+
+    /**
+     * Return ghost TargetX.
+     * 
+     * @return ghost TargetX.
+     */
+    public int getTargetX(){
+<span class="fc" id="L163">        return this.targetX;</span>
+    }
+
+    /**
+     * Return ghost TargetY.
+     * 
+     * @return ghost TargetY.
+     */
+    public int getTargetY(){
+<span class="fc" id="L172">        return this.targetY;</span>
+    }
+
+    /**
+     * Return ghost frameRate.
+     * 
+     * @return ghost frameRate.
+     */
+    public int getFrameRate(){
+<span class="fc" id="L181">        return this.frameRate;</span>
+    }
+
+    /**
+     * Set ghost frameRate.
+     * 
+     * @param yTarget ghost frameRate.
+     */
+    public void setFrameRate(int frameRate){
+<span class="fc" id="L190">        this.frameRate = frameRate;</span>
+<span class="fc" id="L191">    }</span>
+
+    /**
+     * Set ghost xTarget.
+     * 
+     * @param yTarget ghost xTarget.
+     */
+    public void setTargetX(int targetX){
+<span class="fc" id="L199">        this.targetX = targetX;</span>
+<span class="fc" id="L200">    }</span>
+
+    /**
+     * Set ghost yTarget.
+     * 
+     * @param yTarget ghost yTarget.
+     */
+    public void setTargetY(int targetY){
+<span class="fc" id="L208">        this.targetY = targetY;</span>
+<span class="fc" id="L209">    }</span>
+
+    /**
+     * Return direction of the ghost.
+     * 
+     * @return direction of the ghost.
+     */
+    public String getDirection(){
+<span class="fc" id="L217">        return this.direction;</span>
+    }
+
+    /**
+     * Return boolean that indicate chaser existence.
+     * 
+     * @return boolean that indicate chaser existence.
+     */
+    public boolean getNoChaser(){
+<span class="fc" id="L226">        return this.noChaser;</span>
+    }
+
+    /**
+     * Set ghost direction.
+     * 
+     * @param direction ghost direction.
+     */
+    public void setDirection(String direction){
+<span class="fc" id="L235">        this.direction = direction;</span>
+<span class="fc" id="L236">    }</span>
+
+    /**
+     * Return ghost boolean that indicate draw line.
+     * 
+     * @return boolean that indicate draw line.
+     */
+    public boolean getDrawLine(){
+<span class="fc" id="L244">        return this.drawLine;</span>
+    }
+
+    /**
+     * Set ghost xVariable.
+     * 
+     * @param xVariable ghost xVariable.
+     */
+    public void setX (int xVariable){
+<span class="fc" id="L253">        this.xVariable = xVariable;</span>
+<span class="fc" id="L254">    }</span>
+
+    /**
+     * Set ghost yVariable.
+     * 
+     * @param yVariable ghost yVariable.
+     */
+    public void setY (int yVariable){
+<span class="fc" id="L262">        this.yVariable = yVariable;</span>
+<span class="fc" id="L263">    }</span>
+
+    /**
+     * Set mode based on its given parameter.
+     * 
+     * @param mode Mode of the ghost.
+     */
+    public void setMode(String mode){
+<span class="fc" id="L271">        this.mode = mode;</span>
+<span class="fc" id="L272">        this.frameRate = 0;</span>
+<span class="fc" id="L273">    }</span>
+
+    /**
+     * Return type of the ghost.
+     * 
+     * @return Type of the ghost.
+     */
+    public String getType(){
+<span class="fc" id="L281">        return this.type;</span>
+    }
+
+    /**
+     * Set boolean, has chaser being removed or not.
+     *
+     * @param bol Boolean for chaser existence.
+     */
+    public void setNoChaser(boolean bol){
+<span class="fc" id="L290">        this.noChaser = bol;</span>
+<span class="fc" id="L291">    }</span>
+
+    /**
+     * Set boolean to draw line.
+     *
+     * @param drawLine Boolean to draw line.
+     */
+    public void setDrawLine(boolean drawLine){
+<span class="fc" id="L299">        this.drawLine = drawLine;</span>
+<span class="fc" id="L300">    }</span>
+
+    /**
+     * Return current mode of the ghost.
+     *
+     * @return current mode of ghost.
+     */
+    public String getMode(){
+<span class="fc" id="L308">        return this.mode;</span>
+    }
+
+    /**
+     * Return Xcoordinate of the ghost.
+     *
+     * @return Xcoordinate of ghost.
+     */
+    public int getX(){
+<span class="fc" id="L317">        return this.xVariable;</span>
+    }
+
+    /**
+     * Return Ycoordinate of the ghost.
+     *
+     * @return Ycoordinate of ghost.
+     */
+    public int getY(){
+<span class="fc" id="L326">        return this.yVariable;</span>
+    }
+
+    /**
+     * Return Xpixels of the ghost.
+     *
+     * @return Xpixels of ghost.
+     */
+    public int getPixelsX(){
+<span class="fc" id="L335">        return this.xPixels;</span>
+    }
+
+    /**
+     * Return Ypixels of the ghost.
+     *
+     * @return Ypixels of ghost.
+     */
+    public int getPixelsY(){
+<span class="fc" id="L344">        return this.yPixels;</span>
+    }
+
+    /**
+     * Return true if both yPixels and xPixels is 0, else return false.
+     *
+     * @return Boolean outcome frome pixel checking.
+     */
+    public boolean pixelCheck(){
+<span class="fc bfc" id="L353" title="All 4 branches covered.">        if(this.xPixels == 0 &amp;&amp; this.yPixels == 0){</span>
+<span class="fc" id="L354">            return true;</span>
+        }
+<span class="fc" id="L356">        return false;</span>
+    }
+
+    /**
+     * Find the ghost position based on symbol given and check if the num and count must be the same to assign the ghost position.
+     * &lt;p&gt;
+     * num and count are used to allowed same ghost type to have different starting coordinates.
+     * 
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     * @param num Number to indicate ghost number of that type.
+     * @param symbol Symbol representation of ghost in the map.
+     */
+    public void setGhostPosition(Map map, int num , char symbol){
+<span class="fc" id="L369">        int count = 1;</span>
+<span class="fc" id="L370">        boolean flag = false;</span>
+<span class="fc" id="L371">        char[][] grid = map.getMapLayout();</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">        for(int i = 0; i &lt; grid.length; i++){</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">            for(int j = 0; j &lt; grid[i].length; j++){</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">                if (grid[i][j] == symbol){</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">                    if(num == count){</span>
+<span class="fc" id="L376">                        this.xVariable = j;</span>
+<span class="fc" id="L377">                        this.yVariable = i;</span>
+<span class="fc" id="L378">                        this.startX = j;</span>
+<span class="fc" id="L379">                        this.startY = i;</span>
+<span class="fc" id="L380">                        flag = true;</span>
+<span class="fc" id="L381">                        break;</span>
+                    }else{
+<span class="fc" id="L383">                        count += 1;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L387" title="All 2 branches covered.">            if(flag){</span>
+<span class="fc" id="L388">                break;</span>
+            }
+        }
+<span class="fc" id="L391">    }</span>
+
+    /**
+     * This method reset ghost when they collide with waka
+     * &lt;p&gt;
+     * Reset ghost by pixels of ghost to 0, Ycoodrinate/tile to starting Y, Xcoordinate/tile to starting X, 
+     * direction of ghost to Left, mode of ghost tp scatter, framerate of ghost to 0 and both pixels to 0.
+     */
+
+    public void reset(){
+<span class="fc" id="L401">        this.xVariable = this.startX;</span>
+<span class="fc" id="L402">        this.yVariable = this.startY;</span>
+<span class="fc" id="L403">        this.xPixels = 0;</span>
+<span class="fc" id="L404">        this.yPixels = 0;</span>
+<span class="fc" id="L405">        this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L406">        this.frameRate = 0;</span>
+<span class="fc" id="L407">        this.mode = &quot;Scatter&quot;;</span>
+<span class="fc" id="L408">    }</span>
+
+    /**
+     * Set ghost graphic/image based on their mode.
+     */
+    public void setGraphic(){
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        if(this.mode.equals(&quot;Frighten&quot;)){</span>
+<span class="fc" id="L415">            this.currentImage = this.fImage;</span>
+        }
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        else if(this.mode.equals(&quot;Soda&quot;)){</span>
+<span class="fc" id="L418">            this.currentImage = this.sImage;</span>
+        }
+        else{
+<span class="fc" id="L421">            this.currentImage = this.image;</span>
+        }
+<span class="fc" id="L423">    }</span>
+
+    /**
+     * Check collision between waka and ghost by this formula. Return true when the formula form both ghost and waka equal
+     * &lt;p&gt;
+     * Formula for waka X/Y = floor division((waka pixels + waka coordinate * 16) / 16)
+     * Formula for ghost X/Y = floor division((ghost pixels + ghost coordinate * 16) / 16)
+     *
+     * @return True if waka and ghost has the same formula X/Y.
+     */
+    public boolean checkWakaCollision(){
+<span class="fc" id="L434">        int wakaXpixels = this.waka.getPixelsX();</span>
+<span class="fc" id="L435">        int wakaYpixels = this.waka.getPixelsY();</span>
+<span class="fc" id="L436">        int wakaX = this.waka.getX();</span>
+<span class="fc" id="L437">        int wakaY = this.waka.getY();</span>
+<span class="fc" id="L438">        int ghostXpixels = this.xPixels;</span>
+<span class="fc" id="L439">        int ghostYpixels = this.yPixels;</span>
+<span class="fc" id="L440">        int ghostX = this.xVariable;</span>
+<span class="fc" id="L441">        int ghostY = this.yVariable;</span>
+<span class="fc" id="L442">        double wakaFormulaX = Math.floor((wakaXpixels + wakaX * 16)/ 16);</span>
+<span class="fc" id="L443">        double wakaFormulaY = Math.floor((wakaYpixels + wakaY * 16)/ 16);</span>
+<span class="fc" id="L444">        double ghostFormulaX = Math.floor((ghostXpixels + ghostX * 16)/ 16);</span>
+<span class="fc" id="L445">        double ghostFormulaY = Math.floor((ghostYpixels + ghostY * 16)/ 16);</span>
+        
+<span class="fc bfc" id="L447" title="All 4 branches covered.">        if(ghostFormulaX == wakaFormulaX &amp;&amp; ghostFormulaY == wakaFormulaY){</span>
+<span class="fc" id="L448">            return true;</span>
+        }
+        
+<span class="fc" id="L451">        return false;</span>
+    }
+
+    /**
+     * Return 27 if Xcoordinate of ghost target more than 27, return 0 if Xcoordinate of ghost target less than 0 and return number if its between 0 and 27.
+     *
+     * @param num Waka target Xcoordinate.
+     * @return Number in range of 0-27. 
+     */
+    public int checkBoundX(int num){
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        if(num &gt; 27){</span>
+<span class="fc" id="L462">            return 27;</span>
+        }
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        else if(num &lt; 0){</span>
+<span class="fc" id="L465">            return 0;</span>
+        }
+        else{
+<span class="fc" id="L468">            return num;</span>
+        }
+    }
+
+    /**
+     * Return 35 if Ycoordinate of ghost target more than 35, return 0 if Ycoordinate of ghost target less than 0 and return number if its between 0 and 35.
+     *
+     * @param num Waka target Ycoordinate.
+     * @return Number in range of 0-35. 
+     */
+    public int checkBoundY(int num){
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        if(num &gt; 35){</span>
+<span class="fc" id="L480">            return 35;</span>
+        }
+<span class="fc bfc" id="L482" title="All 2 branches covered.">        else if(num &lt; 0){</span>
+<span class="fc" id="L483">            return 0;</span>
+        }
+        else{
+<span class="fc" id="L486">            return num;</span>
+        }
+    }
+
+    /**
+     * Set ghost speed, ghost duration (scatter,frighten,chase) taken from JsonParser object.
+     * 
+     * @param parse Object of JsonParser.
+     * @param i Index of modeLength.
+     * @param j Index of modeLength.
+     */
+    public void setConfig(JsonParser parse,int i,int j){
+<span class="fc" id="L498">        this.durationFrighten = parse.getFrightened();</span>
+<span class="fc" id="L499">        this.speed = parse.getSpeed();</span>
+<span class="fc" id="L500">        this.durationScatter = (long) parse.getModeLengths().get(i);</span>
+<span class="fc" id="L501">        this.durationChase = (long) parse.getModeLengths().get(j); </span>
+<span class="fc" id="L502">        this.durationSoda = (long) parse.getSoda();   </span>
+<span class="fc" id="L503">    }</span>
+
+
+    /**
+     * Return true if the ghost is in the intersection, return false if ghost is not in the intersection.
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     * @return True if in intersection otherwise false.
+     */
+    public boolean checkIntersection(Map map){
+<span class="fc" id="L513">        Entities[][] grid = map.getMapLayoutObj();</span>
+<span class="fc" id="L514">        int count = 0;</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">        if (this.pixelCheck()){</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">            if (!grid[this.yVariable][this.xVariable - 1].isSolid()){</span>
+<span class="fc" id="L517">                count += 1;</span>
+            }
+<span class="fc bfc" id="L519" title="All 2 branches covered.">            if (!grid[this.yVariable][this.xVariable + 1].isSolid()){</span>
+<span class="fc" id="L520">                count += 1;</span>
+            }
+<span class="fc bfc" id="L522" title="All 2 branches covered.">            if (!grid[this.yVariable - 1][this.xVariable].isSolid()){</span>
+<span class="fc" id="L523">                count += 1;</span>
+            }
+<span class="fc bfc" id="L525" title="All 2 branches covered.">            if (!grid[this.yVariable + 1][this.xVariable].isSolid()){</span>
+<span class="fc" id="L526">                count += 1;</span>
+            }
+<span class="fc bfc" id="L528" title="All 2 branches covered.">            if (count &gt;= 3){</span>
+<span class="fc" id="L529">                return true;</span>
+            }
+        }
+<span class="fc" id="L532">        return false;</span>
+    }
+
+    /**
+     * Find the difference between ghost target Xcoordinate and ghost Xcoordinate.
+     *
+     * @return The difference between them.
+     */
+    public int checkDiffX(){
+<span class="fc" id="L541">        return this.targetX - this.xVariable;</span>
+    }
+
+    /**
+     * Find the difference between ghost target Ycoordinate and ghost Ycoordinate.
+     *
+     * @return The difference between them.
+     */
+    public int checkDiffY(){
+<span class="fc" id="L550">        return this.targetY - this.yVariable;</span>
+    }
+
+    /**
+     * Set ghost target Xcoordinate and Ycoordinate based on each ghost behaviour.
+     */
+    public abstract void checkTarget();
+    
+    /**
+     * Check ghost next move when ghost reach an intersection, by predicting the ghost future move and 
+     * Calculate their future position with target position using the euclidean distance formula. 
+     * Put the distance into a map with the direction as the key, then take the smallest value from the map,
+     * set ghost direction as the key of the smallest value. This allowed only if the next tile is not a solid and the direction
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void checkNextMove(Map map){
+<span class="fc" id="L567">        Entities[][] grid = map.getMapLayoutObj();</span>
+<span class="fc" id="L568">        int diffX = this.checkDiffX();</span>
+<span class="fc" id="L569">        int diffY = this.checkDiffY();</span>
+<span class="fc" id="L570">        HashMap&lt;String, Double&gt; dic = new HashMap&lt;String, Double&gt;();</span>
+
+<span class="fc bfc" id="L572" title="All 2 branches covered.">        if(this.pixelCheck()){</span>
+<span class="fc bfc" id="L573" title="All 4 branches covered.">            if (!grid[this.yVariable][this.xVariable - 1].isSolid() &amp;&amp; !this.direction.equals(&quot;Right&quot;)){</span>
+<span class="fc" id="L574">                double formula = Math.sqrt(Math.pow(diffX + 1, 2) + Math.pow(diffY, 2));</span>
+<span class="fc" id="L575">                dic.put(&quot;Left&quot;,formula);</span>
+            }
+<span class="fc bfc" id="L577" title="All 4 branches covered.">            if (!grid[this.yVariable][this.xVariable + 1].isSolid() &amp;&amp; !this.direction.equals(&quot;Left&quot;)){</span>
+<span class="fc" id="L578">                double formula = Math.sqrt(Math.pow(diffX - 1, 2) + Math.pow(diffY, 2));</span>
+<span class="fc" id="L579">                dic.put(&quot;Right&quot;,formula);</span>
+            }
+<span class="fc bfc" id="L581" title="All 4 branches covered.">            if (!grid[this.yVariable + 1][this.xVariable].isSolid() &amp;&amp; !this.direction.equals(&quot;Up&quot;)){</span>
+<span class="fc" id="L582">                double formula = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY - 1, 2));</span>
+<span class="fc" id="L583">                dic.put(&quot;Down&quot;,formula);</span>
+            }
+<span class="fc bfc" id="L585" title="All 4 branches covered.">            if (!grid[this.yVariable - 1][this.xVariable].isSolid() &amp;&amp; !this.direction.equals(&quot;Down&quot;)){</span>
+<span class="fc" id="L586">                double formula = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY + 1, 2));</span>
+<span class="fc" id="L587">                dic.put(&quot;Up&quot;,formula);</span>
+            }
+<span class="fc bfc" id="L589" title="All 4 branches covered.">            if (this.mode.equals(&quot;Frighten&quot;) || this.mode.equals(&quot;Soda&quot;)){</span>
+<span class="fc" id="L590">                ArrayList&lt;String&gt; keys = new ArrayList&lt;String&gt;(dic.keySet());</span>
+<span class="fc" id="L591">                Random random = new Random();</span>
+<span class="fc" id="L592">                this.direction = keys.get(random.nextInt(keys.size()));</span>
+<span class="fc" id="L593">                return;</span>
+            }
+
+<span class="fc" id="L596">            String direct = null;</span>
+<span class="fc" id="L597">            double smallest = 0;</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">            for (String key : dic.keySet()){</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">                if(smallest == 0){</span>
+<span class="fc" id="L600">                    smallest = dic.get(key);</span>
+<span class="fc" id="L601">                    direct = key;</span>
+                }
+<span class="fc bfc" id="L603" title="All 2 branches covered.">                if(dic.get(key) &lt; smallest){</span>
+<span class="fc" id="L604">                    smallest = dic.get(key);</span>
+<span class="fc" id="L605">                    direct = key;</span>
+                }
+<span class="fc" id="L607">            }</span>
+<span class="fc" id="L608">            this.direction = direct;</span>
+        }
+<span class="fc" id="L610">    }</span>
+
+    /**
+     * This method change the direction of ghost if its detect turn/corner.
+     * This method also check the ghost future tile. 
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void turn(Map map){
+<span class="fc" id="L619">        Entities[][] grid = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L620" title="All 4 branches covered.">        if (!this.direction.equals(&quot;Left&quot;) &amp;&amp; !grid[this.yVariable][this.xVariable + 1].isSolid()){</span>
+<span class="fc bfc" id="L621" title="All 2 branches covered.">            if(this.pixelCheck()){</span>
+<span class="fc" id="L622">                this.direction = &quot;Right&quot;;</span>
+            }
+        }
+<span class="fc bfc" id="L625" title="All 4 branches covered.">        else if (!this.direction.equals(&quot;Right&quot;) &amp;&amp; !grid[this.yVariable][this.xVariable - 1].isSolid()){</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">            if(this.pixelCheck()){</span>
+<span class="fc" id="L627">                this.direction = &quot;Left&quot;;</span>
+            }
+        }
+<span class="fc bfc" id="L630" title="All 4 branches covered.">        else if (!this.direction.equals(&quot;Down&quot;) &amp;&amp; !grid[this.yVariable - 1][this.xVariable].isSolid()){</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">            if(this.pixelCheck()){</span>
+<span class="fc" id="L632">                this.direction = &quot;Up&quot;;</span>
+            }
+        }
+<span class="pc bpc" id="L635" title="2 of 4 branches missed.">        else if (!this.direction.equals(&quot;Up&quot;) &amp;&amp; !grid[this.yVariable + 1][this.xVariable].isSolid()){</span>
+<span class="fc bfc" id="L636" title="All 2 branches covered.">            if(this.pixelCheck()){</span>
+<span class="fc" id="L637">                this.direction = &quot;Down&quot;;</span>
+            }
+        }
+        else{
+<span class="nc bnc" id="L641" title="All 2 branches missed.">            if(this.direction.equals(&quot;Left&quot;)){</span>
+<span class="nc" id="L642">                this.direction = &quot;Right&quot;;</span>
+<span class="nc bnc" id="L643" title="All 2 branches missed.">            }else if(this.direction.equals(&quot;Right&quot;)){</span>
+<span class="nc" id="L644">                this.direction = &quot;Left&quot;;</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">            }else if(this.direction.equals(&quot;Up&quot;)){</span>
+<span class="nc" id="L646">                this.direction = &quot;Down&quot;;</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">            }else if(this.direction.equals(&quot;Down&quot;)){</span>
+<span class="nc" id="L648">                this.direction = &quot;Up&quot;;</span>
+            }
+        }
+<span class="fc" id="L651">    } </span>
+
+    /**
+     * Change the mode if the duration of each mode already reached, and store the current mode into previous mode.
+     * This method check the next tile, whether if its a solid or not.
+     * If its not a solid the ghost is allowed to add/subtract its xPixels/yPixels (based on ghost direction).
+     * &lt;p&gt;
+     * If xPixels/yPixels have reach 16 ,it reset back the pixels to 0 and add/subtract Xcoordinate/Ycoordinate of ghost by speed of ghost (based on ghost direction).
+     * &lt;p&gt;
+     * If ghost has reach an intersection ghost check for next move or else ghost try to turn.
+     * &lt;p&gt;
+     * If ghost not in frighten mode it will check for the ghost target position.
+     * 
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void tick(Map map){
+<span class="fc" id="L667">        Entities[][] grid = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L668" title="All 4 branches covered.">        if (this.mode.equals(&quot;Scatter&quot;) &amp;&amp; this.frameRate / (this.durationScatter * 60) == 1){</span>
+<span class="fc" id="L669">            this.frameRate = 0;</span>
+<span class="fc" id="L670">            this.pMode = &quot;Chase&quot;;</span>
+<span class="fc" id="L671">            this.mode = &quot;Chase&quot;;</span>
+        }
+<span class="fc bfc" id="L673" title="All 4 branches covered.">        else if (this.mode.equals(&quot;Chase&quot;) &amp;&amp; this.frameRate / (this.durationChase * 60) == 1){</span>
+<span class="fc" id="L674">            this.frameRate = 0;</span>
+<span class="fc" id="L675">            this.pMode = &quot;Scatter&quot;;</span>
+<span class="fc" id="L676">            this.mode = &quot;Scatter&quot;;</span>
+        }
+<span class="fc bfc" id="L678" title="All 4 branches covered.">        else if (this.mode.equals(&quot;Frighten&quot;) &amp;&amp; this.frameRate / (this.durationFrighten * 60) == 1){</span>
+<span class="fc" id="L679">            this.frameRate = 0;</span>
+<span class="fc" id="L680">            this.mode = this.pMode;</span>
+        }
+<span class="fc bfc" id="L682" title="All 4 branches covered.">        else if (this.mode.equals(&quot;Soda&quot;) &amp;&amp; this.frameRate / (this.durationSoda * 60) == 1){</span>
+<span class="fc" id="L683">            this.frameRate = 0;</span>
+<span class="fc" id="L684">            this.mode = this.pMode;</span>
+        }
+<span class="fc" id="L686">        this.setGraphic();</span>
+<span class="fc bfc" id="L687" title="All 2 branches covered.">        if (this.checkIntersection(map)){</span>
+<span class="fc" id="L688">            this.checkNextMove(map);</span>
+        }else{
+<span class="fc" id="L690">            this.turn(map);</span>
+        }
+<span class="fc bfc" id="L692" title="All 4 branches covered.">        if(!(this.mode.equals(&quot;Frighten&quot;) || this.mode.equals(&quot;Soda&quot;))){</span>
+<span class="fc" id="L693">          this.checkTarget();  </span>
+        }
+
+
+<span class="fc bfc" id="L697" title="All 2 branches covered.">        if(this.direction.equals(&quot;Left&quot;)){</span>
+<span class="fc" id="L698">            this.xPixels -= this.speed;</span>
+<span class="pc bpc" id="L699" title="1 of 4 branches missed.">            if (this.xPixels % 16 == 0 &amp;&amp; this.xPixels != 0){</span>
+<span class="fc" id="L700">                this.xPixels = 0;</span>
+<span class="fc" id="L701">                this.xVariable -= this.speed;</span>
+            }
+        }
+
+<span class="fc bfc" id="L705" title="All 2 branches covered.">        else if(this.direction.equals(&quot;Right&quot;)){</span>
+<span class="fc" id="L706">            this.xPixels += this.speed;</span>
+<span class="pc bpc" id="L707" title="1 of 4 branches missed.">            if (this.xPixels % 16 == 0 &amp;&amp; this.xPixels != 0){</span>
+<span class="fc" id="L708">                this.xPixels = 0;</span>
+<span class="fc" id="L709">                this.xVariable += this.speed;</span>
+            }
+        }
+
+<span class="fc bfc" id="L713" title="All 2 branches covered.">        else if(this.direction.equals(&quot;Up&quot;)){</span>
+<span class="fc" id="L714">            this.yPixels -= this.speed;</span>
+<span class="pc bpc" id="L715" title="1 of 4 branches missed.">            if (this.yPixels % 16 == 0 &amp;&amp; this.yPixels != 0){</span>
+<span class="fc" id="L716">                this.yPixels = 0;</span>
+<span class="fc" id="L717">                this.yVariable -= this.speed;</span>
+            }
+        }
+
+        else{
+<span class="fc" id="L722">            this.yPixels += this.speed;</span>
+<span class="pc bpc" id="L723" title="1 of 4 branches missed.">            if (this.yPixels % 16 == 0 &amp;&amp; this.yPixels != 0){</span>
+<span class="fc" id="L724">                this.yPixels = 0;</span>
+<span class="fc" id="L725">                this.yVariable += this.speed;</span>
+            }
+        }
+
+<span class="fc" id="L729">        this.frameRate += 1;</span>
+<span class="fc" id="L730">    }</span>
+
+    /**
+     * Draw Ghost in correct position, for X axis : Xcoordinate * 16 add by their Xpixels add offset, for Y axis : Ycoordinate * 16 add by Ypixels add offset.
+     * &lt;p&gt;
+     * Draw line if ghost is not in frighten mode 
+     * @param app PApplet object.
+     */
+    public void draw(PApplet app){
+<span class="fc" id="L739">        app.image(this.currentImage,(this.xVariable * 16 + this.xPixels) - 6 ,(this.yVariable * 16 + this.yPixels) - 6);</span>
+<span class="pc bpc" id="L740" title="5 of 6 branches missed.">        if(this.drawLine &amp;&amp; !(this.mode.equals(&quot;Frighten&quot;) || this.mode.equals(&quot;Soda&quot;))){</span>
+<span class="nc" id="L741">            app.line((this.xVariable * 16 + this.xPixels) + 6, (this.yVariable * 16 + this.yPixels) + 6,this.targetX * 16,this.targetY * 16);</span>
+        }
+<span class="fc" id="L743">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

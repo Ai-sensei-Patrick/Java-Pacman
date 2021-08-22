@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ghost.WakaTest" tests="23" skipped="0" failures="0" errors="0" timestamp="2020-11-21T15:22:14" hostname="DESKTOP-JR70JIC" time="0.026">
+  <properties/>
+  <testcase name="testTickDownSoda()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickDownWall()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickUpSuper()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickDown()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickLeft()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickLeftSoda()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickLeftWall()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="simpleTest()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testReset()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testNextMoveDown()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testNextMoveLeft()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testGetterSetter()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickDownSuper()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickRight()" classname="ghost.WakaTest" time="0.002"/>
+  <testcase name="testNextMoveRight()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickUpSoda()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickUpWall()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickLeftSuper()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickRightSuper()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickUp()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickRightSoda()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testTickRightWall()" classname="ghost.WakaTest" time="0.001"/>
+  <testcase name="testNextMoveUp()" classname="ghost.WakaTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

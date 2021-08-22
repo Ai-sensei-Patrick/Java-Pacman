@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">GameManager.java</span></div><h1>GameManager.java</h1><pre class="source lang-java linenums">package ghost;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.core.PFont;
+import java.util.*;
+
+public class GameManager{
+
+    private Waka waka;
+    private Map map;
+    private ArrayList&lt;Ghost&gt; ghosts;
+    private ArrayList&lt;Ghost&gt; removedGhosts;
+    private JsonParser jParse;
+    private boolean bar; 
+    private int frameRate;
+    private String fileName;
+    private boolean losegame;
+    private boolean wingame;
+    private PFont font;
+    private int chaserIndex;
+    private int ghostCollidedIndex;
+
+    /**
+     * Store waka object, map object, ghost object in an ArrayList, removed ghost object in an ArrayList, boolean for spacebar, 
+     * framerate of game, filename, boolean if the game lose, ghost index when ghost colide with waka, chaser index for whim, 
+     * boolean if the game win, and Font for the text. 
+     */
+<span class="fc" id="L29">    public GameManager(){</span>
+<span class="fc" id="L30">        this.waka = null;</span>
+<span class="fc" id="L31">        this.map = null;</span>
+<span class="fc" id="L32">        this.ghosts = new ArrayList&lt;Ghost&gt;();</span>
+<span class="fc" id="L33">        this.removedGhosts = new ArrayList&lt;Ghost&gt;();</span>
+<span class="fc" id="L34">        this.bar = true;</span>
+<span class="fc" id="L35">        this.jParse = new JsonParser();</span>
+<span class="fc" id="L36">        this.frameRate = 0;</span>
+<span class="fc" id="L37">        this.fileName = null;</span>
+<span class="fc" id="L38">        this.losegame = false;</span>
+<span class="fc" id="L39">        this.ghostCollidedIndex = 0;</span>
+<span class="fc" id="L40">        this.chaserIndex = 0;</span>
+<span class="fc" id="L41">        this.wingame = false;</span>
+<span class="fc" id="L42">        this.font = null;</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Set wingame true, if the user win the game.
+     *
+     * @param bol boolean for win the game.
+     */
+    public void setWin(boolean bol){
+<span class="fc" id="L51">        this.wingame = bol;</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Set losegame true, if the user lose the game.
+     *
+     * @param bol boolean for lose the game.
+     */
+    public void setLose(boolean bol){
+<span class="fc" id="L60">        this.losegame = bol;</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Return true if user win the game, otherwise false.  
+     *
+     * @return boolean true if user win the game.
+     */
+    public boolean getWin(){
+<span class="fc" id="L69">        return this.wingame;</span>
+    }
+
+    /**
+     * Return true if user lose the game, otherwise false.  
+     *
+     * @return boolean true if user lose the game.
+     */
+    public boolean getLose(){
+<span class="fc" id="L78">        return this.losegame;</span>
+    }
+
+    /**
+     * Return ghost arraylist (collection of different type of ghost).  
+     *
+     * @return collection of ghost with different type in an arraylist.
+     */
+    public ArrayList&lt;Ghost&gt; getRemovedGhost(){
+<span class="fc" id="L87">        return this.removedGhosts;</span>
+    }
+
+    /**
+     * Set framerate .  
+     *
+     * @param frame frameRate of the game.
+     */
+    public void setFrameRate(int frame){
+<span class="fc" id="L96">        this.frameRate = frame;</span>
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Return index of chaser in ghost arraylist.
+     *
+     * @return chaser index.
+     */
+    public int getChaserIndex(){
+<span class="fc" id="L105">        return this.chaserIndex;</span>
+    }
+
+    /**
+     * Set map instance variable.
+     *
+     * @param map Map Object.
+     */
+    public void setMap(Map map){
+<span class="fc" id="L114">        this.map = map;</span>
+<span class="fc" id="L115">    }</span>
+
+    /**
+     * Set waka instance variable.
+     *
+     * @param waka Waka Object.
+     */
+    public void setWaka(Waka waka){
+<span class="fc" id="L123">        this.waka = waka;</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Set jParse instance variable.
+     *
+     * @param parse JsonParser Object.
+     */
+    public void setjParse(JsonParser parse){
+<span class="fc" id="L132">        this.jParse = parse;</span>
+<span class="fc" id="L133">    }</span>
+
+    /**
+     * Add ghost to arraylist of ghost.
+     * 
+     * @param ghost Ghost Object.
+     */
+    public void addGhost(Ghost ghost){
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if(ghost.getType().equals(&quot;Chaser&quot;)){</span>
+<span class="fc" id="L142">            this.chaserIndex = this.ghosts.size();</span>
+        }
+<span class="fc" id="L144">        this.ghosts.add(ghost);</span>
+<span class="fc" id="L145">    }</span>
+    /**
+     * Return arraylist of ghosts
+     *
+     * @return arraylist of ghosts
+     */
+    public ArrayList&lt;Ghost&gt; getGhosts(){
+<span class="fc" id="L152">        return this.ghosts;</span>
+    }
+
+    /**
+     * Return waka Object.
+     *
+     * @return waka Object.
+     */
+    public Waka getWaka(){
+<span class="fc" id="L161">        return this.waka;</span>
+    }
+
+    /**
+     * Read .CONFIG file and put maps filename.
+     *
+     * @param Jsonfile Name of .CONFIG file.
+     */
+    public void readFile(String Jsonfile){
+<span class="fc" id="L170">        this.jParse.readJson(Jsonfile);</span>
+<span class="fc" id="L171">        this.fileName = Jsonfile;</span>
+<span class="fc" id="L172">    }</span>
+
+    /**
+     * If waka lives is equal to zero return true, otherwise return false.
+     *
+     * @return true if waka lives is 0, otherwise false.
+     */
+    public boolean isGameEnd(){
+<span class="fc" id="L180">        Long lives = this.waka.getLives();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if(lives == 0){</span>
+<span class="fc" id="L182">            return true;</span>
+        }
+<span class="fc" id="L184">        return false;</span>
+    }
+
+    /**
+     * Set up the whole game object such as Map Object, JsonParser Object, Ghost object and put them inside an arraylist,
+     * Waka Object.This method load image for each object, set starting position for each object, 
+     * pass through the information from JsonParser Object , save the font for text and set Chaser index.
+     *
+     * @param app PApplet Object.
+     */
+    public void setUp(App app){
+        //Load images
+        //Set up for map
+<span class="fc" id="L197">        this.map = new Map(app.loadImage(&quot;src/main/resources/downLeft.png&quot;),</span>
+<span class="fc" id="L198">        app.loadImage(&quot;src/main/resources/downRight.png&quot;),</span>
+<span class="fc" id="L199">        app.loadImage(&quot;src/main/resources/fruit.png&quot;),</span>
+<span class="fc" id="L200">        app.loadImage(&quot;src/main/resources/horizontal.png&quot;),</span>
+<span class="fc" id="L201">        app.loadImage(&quot;src/main/resources/upLeft.png&quot;),</span>
+<span class="fc" id="L202">        app.loadImage(&quot;src/main/resources/upRight.png&quot;),</span>
+<span class="fc" id="L203">        app.loadImage(&quot;src/main/resources/vertical.png&quot;),</span>
+<span class="fc" id="L204">        app.loadImage(&quot;src/main/resources/superfruit.png&quot;),</span>
+<span class="fc" id="L205">        app.loadImage(&quot;src/main/resources/soda.png&quot;));</span>
+<span class="fc" id="L206">        this.map.parseMapToChar(this.jParse);</span>
+<span class="fc" id="L207">        this.map.mapCharToObject();</span>
+
+        //Set up for waka
+<span class="fc" id="L210">        this.waka = new Waka(app.loadImage(&quot;src/main/resources/playerLeft.png&quot;),</span>
+<span class="fc" id="L211">        app.loadImage(&quot;src/main/resources/playerRight.png&quot;),</span>
+<span class="fc" id="L212">        app.loadImage(&quot;src/main/resources/playerDown.png&quot;),</span>
+<span class="fc" id="L213">        app.loadImage(&quot;src/main/resources/playerUp.png&quot;),</span>
+<span class="fc" id="L214">        app.loadImage(&quot;src/main/resources/playerClosed.png&quot;));</span>
+<span class="fc" id="L215">        this.waka.setWakaPosition(this.map);</span>
+<span class="fc" id="L216">        this.waka.setConfig(this.jParse);</span>
+
+        //Set up Font
+<span class="fc" id="L219">        this.font = app.createFont(&quot;src/main/resources/PressStart2P-Regular.ttf&quot;,21);</span>
+<span class="fc" id="L220">        app.textFont(this.font);</span>
+
+        //Set up for Ambusher
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        for(int count = 1; count &lt;= this.map.getNumAmbusher(); count++){</span>
+<span class="fc" id="L224">            Ambusher ambusher = new Ambusher(&quot;Ambusher&quot;,app.loadImage(&quot;src/main/resources/ambusher.png&quot;),this.waka,27,0,</span>
+<span class="fc" id="L225">            app.loadImage(&quot;src/main/resources/frightened.png&quot;),app.loadImage(&quot;src/main/resources/sodaGhost.png&quot;));</span>
+
+<span class="fc" id="L227">            ambusher.setGhostPosition(this.map,count,'a');</span>
+<span class="fc" id="L228">            ambusher.setConfig(this.jParse,0,1);</span>
+<span class="fc" id="L229">            this.ghosts.add(ambusher);</span>
+        }
+
+        //Set up for Chaser
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        for(int count = 1; count &lt;= this.map.getNumChaser(); count++){</span>
+<span class="fc" id="L234">            Chaser chaser = new Chaser(&quot;Chaser&quot;,app.loadImage(&quot;src/main/resources/chaser.png&quot;),this.waka,0,0,</span>
+<span class="fc" id="L235">            app.loadImage(&quot;src/main/resources/frightened.png&quot;),app.loadImage(&quot;src/main/resources/sodaGhost.png&quot;));</span>
+
+<span class="fc" id="L237">            chaser.setGhostPosition(this.map,count,'c');</span>
+<span class="fc" id="L238">            chaser.setConfig(this.jParse,2,3);</span>
+<span class="fc" id="L239">            this.chaserIndex = this.ghosts.size();</span>
+<span class="fc" id="L240">            this.ghosts.add(chaser);</span>
+        }
+
+        //Set up for Ignorant
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        for(int count = 1; count &lt;= this.map.getNumIgnorant(); count++){</span>
+<span class="fc" id="L245">            Ignorant ignorant = new Ignorant(&quot;Ignorant&quot;,app.loadImage(&quot;src/main/resources/ignorant.png&quot;),this.waka,0,35,</span>
+<span class="fc" id="L246">            app.loadImage(&quot;src/main/resources/frightened.png&quot;),app.loadImage(&quot;src/main/resources/sodaGhost.png&quot;));</span>
+
+<span class="fc" id="L248">            ignorant.setGhostPosition(this.map,count,'i');</span>
+<span class="fc" id="L249">            ignorant.setConfig(this.jParse,4,5);</span>
+<span class="fc" id="L250">            this.ghosts.add(ignorant);</span>
+        }
+
+        //Set up for Whim
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        for(int count = 1; count &lt;= this.map.getNumWhim(); count++){</span>
+<span class="fc" id="L255">            Whim whim = new Whim(&quot;Whim&quot;,app.loadImage(&quot;src/main/resources/whim.png&quot;),this.waka,27,35,</span>
+<span class="fc" id="L256">            app.loadImage(&quot;src/main/resources/frightened.png&quot;),app.loadImage(&quot;src/main/resources/sodaGhost.png&quot;));</span>
+
+<span class="fc" id="L258">            whim.setChaser(this.ghosts.get(this.chaserIndex));</span>
+<span class="fc" id="L259">            whim.setGhostPosition(this.map,count,'w');</span>
+<span class="fc" id="L260">            whim.setConfig(this.jParse,6,7);</span>
+<span class="fc" id="L261">            this.ghosts.add(whim);</span>
+        }
+<span class="fc" id="L263">    }</span>
+
+    /**
+     * This method check if there any ghost in ghost array collide with waka.
+     *
+     * @return True if there is a ghost collide with waka,otherwise false
+     */
+    public boolean wakaGhostCollide(){
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L272">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            if(g.checkWakaCollision()){</span>
+<span class="fc" id="L274">                this.ghostCollidedIndex = i;</span>
+<span class="fc" id="L275">                return true;</span>
+            }
+        }
+<span class="fc" id="L278">        return false;</span>
+    }
+
+    /**
+     * Draw All the ghost in correct position.
+     *
+     * @param app PApplet Object.
+     */
+    public void drawAllGhost(App app){
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L288">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc" id="L289">            g.draw(app);</span>
+        }
+<span class="fc" id="L291">    }</span>
+
+    /**
+     * Remove Ghost when Ghost and Waka collide in frighten mode.
+     * Put the removed ghost in an arraylist to re-use them when the game reset.
+     * If Ghost collided is a chaser indicate to whim to target waka at chase mode.
+     * If the index of ghost collided is smaller than index of chaser, subtract the index of chaser.
+     */
+    public void removeGhost(){
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        if(this.ghostCollidedIndex == this.chaserIndex){</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">            for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L302">                Ghost g = this.ghosts.get(i);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">                if(g.getType().equals(&quot;Whim&quot;)){</span>
+<span class="fc" id="L304">                    g.setNoChaser(true);</span>
+                }
+            }
+        }
+<span class="fc bfc" id="L308" title="All 2 branches covered.">        if(this.ghostCollidedIndex &lt; this.chaserIndex){</span>
+<span class="fc" id="L309">            this.chaserIndex -= 1;</span>
+        }
+<span class="fc" id="L311">        this.removedGhosts.add(this.ghosts.get(this.ghostCollidedIndex));</span>
+<span class="fc" id="L312">        this.ghosts.remove(this.ghostCollidedIndex);</span>
+<span class="fc" id="L313">    }</span>
+
+    /**
+     * Call all tick method from each ghost in arraylist.
+     */
+    public void tickAllGhost(){
+<span class="fc bfc" id="L319" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L320">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc" id="L321">            g.tick(this.map);</span>
+        }
+<span class="fc" id="L323">    }</span>
+
+    /**
+     * Set boolean line in ghost as true if the user pressed the space bar
+     *
+     * @param bol boolean to indicate if the user pressed the space bar
+     */
+    public void setBooleanLine(boolean bol){
+<span class="fc bfc" id="L331" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L332">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc" id="L333">            g.setDrawLine(bol);</span>
+        }
+<span class="fc" id="L335">    }</span>
+
+    /**
+     * This method extend the keyPressed method from app and when user press left key, it will try to change waka direction to left.
+     * If user press right key, it will try to change waka direction to right.
+     * If user press down key, it will try to change waka direction to down.
+     * If user press up key, it will try to change wka direction to up.
+     * If the user press space bar, it will activate the debug line.
+     * If the user press space bar for the second time, it will deactive debug line.
+     *
+     * @param app PApplet Object.
+     */
+    public void keyPressed(App app){
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">        if(app.key == PApplet.CODED){</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            if(app.keyCode == PApplet.UP){</span>
+<span class="fc" id="L350">                this.waka.moveUp(this.map);</span>
+            }
+<span class="fc bfc" id="L352" title="All 2 branches covered.">            if(app.keyCode == PApplet.DOWN){</span>
+<span class="fc" id="L353">                this.waka.moveDown(this.map);</span>
+            }
+<span class="fc bfc" id="L355" title="All 2 branches covered.">            if(app.keyCode == PApplet.RIGHT){</span>
+<span class="fc" id="L356">                this.waka.moveRight(this.map);</span>
+            }
+<span class="fc bfc" id="L358" title="All 2 branches covered.">            if(app.keyCode == PApplet.LEFT){</span>
+<span class="fc" id="L359">                this.waka.moveLeft(this.map);</span>
+            }
+        } 
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">        if(app.keyCode == ' '){</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">            if(this.bar){</span>
+<span class="nc" id="L364">                this.setBooleanLine(true);</span>
+<span class="nc" id="L365">                app.stroke(255,255,255);</span>
+<span class="nc" id="L366">                this.bar = false;</span>
+            }else{
+<span class="nc" id="L368">                this.setBooleanLine(false);</span>
+<span class="nc" id="L369">                this.bar = true;</span>
+            }
+        } 
+<span class="fc" id="L372">    }</span>
+
+    /**
+     * Set all ghost mode for ghost in the arraylist.
+     *
+     * @param mode ghost mode
+     */
+    public void setGhostMode(String mode){
+<span class="fc bfc" id="L380" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L381">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc" id="L382">            g.setMode(mode);</span>
+        }
+<span class="fc" id="L384">    }</span>
+
+    /**
+     * Check Ghost mode, If ghost in frighten mode return true, otherwise false.
+     *
+     * @return true if the ghost in frighten mode, otherwise false.
+     */
+    public boolean checkGhostFrightenMode(){
+<span class="fc bfc" id="L392" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L393">            String mode = this.ghosts.get(i).getMode();</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">            if(mode.equals(&quot;Frighten&quot;)){</span>
+<span class="fc" id="L395">                return true;</span>
+            }
+        }
+<span class="fc" id="L398">        return false;</span>
+    }
+
+    /**
+     * Return true if waka fruit eaten and map total fruit is the same, otherwise false.
+     *
+     * @return true if both waka fruit eaten and total fruit in map bot are the same, otherwise false.
+     */
+    public boolean isGameWin(){
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        if(this.waka.getfruitEaten() == this.map.getNumFruit()){</span>
+<span class="fc" id="L408">            return true;</span>
+        }
+<span class="fc" id="L410">        return false;</span>
+    }
+
+    /**
+     * Reset back the whole game by calling setUp method again and also re-read the config file, if user win or lose their game.
+     * Clear all removed ghost arraylist and ghosts arraylist.
+     * If waka still got live reset waka and ghosts back to their position without resetting the fruit eaten by waka and the map.
+     */
+    public void resetGame(){
+<span class="fc bfc" id="L419" title="All 4 branches covered.">        if(this.losegame || this.wingame){</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">            if(this.frameRate == 599){</span>
+<span class="fc" id="L421">                this.losegame = false;</span>
+<span class="fc" id="L422">                this.wingame = false;</span>
+<span class="fc" id="L423">                this.removedGhosts.clear();</span>
+<span class="fc" id="L424">                this.ghosts.clear();</span>
+<span class="fc" id="L425">                this.readFile(this.fileName);</span>
+            }
+<span class="fc" id="L427">            return;</span>
+        }
+<span class="fc" id="L429">        this.ghosts.addAll(this.removedGhosts);</span>
+<span class="fc" id="L430">        this.removedGhosts.clear();</span>
+<span class="fc bfc" id="L431" title="All 2 branches covered.">        for(int i = 0; i &lt; this.ghosts.size(); i++){</span>
+<span class="fc" id="L432">            Ghost g = this.ghosts.get(i);</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">            if(g.getType().equals(&quot;Whim&quot;)){</span>
+<span class="fc" id="L434">                g.setNoChaser(false);</span>
+            }
+<span class="fc" id="L436">            g.reset();</span>
+        }
+<span class="fc" id="L438">        this.waka.reset();</span>
+<span class="fc" id="L439">    }</span>
+
+    /**
+     * Draw the whole game, otherwise if user lose or win the game display the text.
+     * Check for waka and ghost collision and set ghost mode, when waka eaten something.
+     * 
+     * @param app PApplet Object
+     */
+    public void draw(App app){
+<span class="pc bpc" id="L448" title="2 of 4 branches missed.">        if(this.losegame || this.wingame){</span>
+<span class="nc" id="L449">            app.textAlign(app.CENTER);</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">            if(this.losegame){</span>
+<span class="nc" id="L451">                app.text(&quot;Game Over&quot;,224,288);</span>
+            } 
+<span class="nc bnc" id="L453" title="All 2 branches missed.">            if(this.wingame){</span>
+<span class="nc" id="L454">                app.text(&quot;You Win&quot;,224,288);</span>
+            }
+<span class="nc" id="L456">            this.resetGame();</span>
+<span class="nc" id="L457">            this.setUp(app);</span>
+<span class="nc" id="L458">            this.frameRate += 1;</span>
+<span class="nc" id="L459">            return;</span>
+        }
+<span class="fc" id="L461">        this.map.draw(app);</span>
+<span class="fc" id="L462">        this.tickAllGhost();</span>
+
+<span class="pc bpc" id="L464" title="1 of 2 branches missed.">        if(this.wakaGhostCollide()){</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">            if(this.checkGhostFrightenMode()){</span>
+<span class="nc" id="L466">                this.removeGhost();</span>
+            }
+            else{
+<span class="nc bnc" id="L469" title="All 2 branches missed.">                if(this.isGameEnd()){</span>
+<span class="nc" id="L470">                    this.frameRate = 0;</span>
+<span class="nc" id="L471">                    this.losegame = true;</span>
+<span class="nc" id="L472">                    return;</span>
+                }else{
+<span class="nc" id="L474">                    this.resetGame();</span>
+                }
+            }
+        }
+<span class="pc bpc" id="L478" title="1 of 2 branches missed.">        if(this.isGameWin()){</span>
+<span class="nc" id="L479">            this.frameRate = 0;</span>
+<span class="nc" id="L480">            this.wingame = true;</span>
+        }
+
+<span class="pc bpc" id="L483" title="1 of 2 branches missed.">        if(this.waka.getIsSuper()){</span>
+<span class="nc" id="L484">            this.setGhostMode(&quot;Frighten&quot;);</span>
+<span class="nc" id="L485">            this.waka.setIsSuper(false);</span>
+        }
+
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">        if(this.waka.getIsSoda()){</span>
+<span class="nc" id="L489">            this.setGhostMode(&quot;Soda&quot;);</span>
+<span class="nc" id="L490">            this.waka.setIsSoda(false);</span>
+        }
+
+<span class="fc" id="L493">        this.waka.tick(this.map);</span>
+<span class="fc" id="L494">        this.drawAllGhost(app);</span>
+<span class="fc" id="L495">        this.waka.draw(app);</span>
+
+<span class="fc" id="L497">        this.frameRate += 1;</span>
+<span class="fc" id="L498">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

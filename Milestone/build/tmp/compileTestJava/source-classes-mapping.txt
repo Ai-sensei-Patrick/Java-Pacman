@@ -1,0 +1,20 @@
+ghost/JSONTest.java
+ ghost.JSONTest
+ghost/GameManagerTest.java
+ ghost.GameManagerTest
+ghost/WakaTest.java
+ ghost.WakaTest
+ghost/GhostIgnorantTest.java
+ ghost.GhostIgnorantTest
+ghost/GhostChaserTest.java
+ ghost.GhostChaserTest
+ghost/AppTest.java
+ ghost.AppTest
+ghost/GhostAmbusherTest.java
+ ghost.GhostAmbusherTest
+ghost/GhostTest.java
+ ghost.GhostTest
+ghost/GhostWhimTest.java
+ ghost.GhostWhimTest
+ghost/MapTest.java
+ ghost.MapTest

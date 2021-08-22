@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">JsonParser.java</span></div><h1>JsonParser.java</h1><pre class="source lang-java linenums">package ghost;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.*;
+import java.util.*;
+
+public class JsonParser{
+
+    private String filename;
+    private Long speed;
+    private Long lives;
+    private Long frightenedLength;
+    private Long sodaLength;
+    private JSONArray modeLengths;
+
+    /**
+    * Store filename of the maps, speed of ghost and waka, modeLengths for each ghost, frigthenedLength for each ghost and sodaLength for each ghost.
+    */
+<span class="fc" id="L22">    public JsonParser(){</span>
+<span class="fc" id="L23">        this.filename = null;</span>
+<span class="fc" id="L24">        this.speed = null;</span>
+<span class="fc" id="L25">        this.lives = null;</span>
+<span class="fc" id="L26">        this.modeLengths = null;</span>
+<span class="fc" id="L27">        this.frightenedLength = null;</span>
+<span class="fc" id="L28">        this.sodaLength = null;</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Return filename of the map.
+     *
+     * @return File name of the map.
+     */
+    public String getFilename(){
+<span class="fc" id="L37">        return this.filename;</span>
+    }
+
+    /**
+     * Return speed of ghost and waka
+     *
+     * @return speed of ghost and waka
+     */
+    public Long getSpeed(){
+<span class="fc" id="L46">        return this.speed;</span>
+    }
+
+    /**
+     * Return live of waka
+     * 
+     * @return Lives of waka.
+     */
+    public Long getLives(){
+<span class="fc" id="L55">        return this.lives;</span>
+    }
+
+    /**
+     * Return ghost frightened mode duration.
+     *
+     * @return ghost frightened mode duration.
+     */
+    public Long getFrightened(){
+<span class="fc" id="L64">        return this.frightenedLength;</span>
+    }
+
+    /**
+     * Return ghost Soda mode duration.
+     *
+     * @return ghost soda mode duration.
+     */
+    public Long getSoda(){
+<span class="fc" id="L73">        return this.sodaLength;</span>
+    }
+
+    /**
+     * Return ghost mode duration.
+     *
+     * @return ghost mode duration.
+     */
+    public JSONArray getModeLengths(){
+<span class="fc" id="L82">        return this.modeLengths;</span>
+    }
+
+    /**
+     * Read .CONFIG file and store them to instance variables : lives, filename, speed, modeLengths, sodaLengths, frightenedLengths.
+     *
+     * @param filenameJSON filename of .CONFIG file.
+     */
+    public void readJson(String filenameJSON){
+
+<span class="fc" id="L92">        JSONParser jsonParser = new JSONParser();</span>
+
+        try{
+<span class="fc" id="L95">            FileReader reader = new FileReader(filenameJSON);</span>
+            //Read JSON file
+<span class="fc" id="L97">            Object obj = jsonParser.parse(reader);</span>
+<span class="fc" id="L98">            JSONObject jsObj = (JSONObject) obj;</span>
+
+<span class="fc" id="L100">            String filename = (String) jsObj.get(&quot;map&quot;);</span>
+<span class="fc" id="L101">            this.filename = filename;</span>
+
+<span class="fc" id="L103">            Long speed = (Long) jsObj.get(&quot;speed&quot;);</span>
+<span class="fc" id="L104">            this.speed = speed;</span>
+
+<span class="fc" id="L106">            Long lives = (Long) jsObj.get(&quot;lives&quot;);</span>
+<span class="fc" id="L107">            this.lives = lives;</span>
+
+<span class="fc" id="L109">            Long frightened = (Long) jsObj.get(&quot;frightenedLength&quot;);</span>
+<span class="fc" id="L110">            this.frightenedLength = frightened;</span>
+
+<span class="fc" id="L112">            Long soda = (Long) jsObj.get(&quot;sodaLength&quot;);</span>
+<span class="fc" id="L113">            this.sodaLength = soda; </span>
+
+<span class="fc" id="L115">            JSONArray modeLengths = (JSONArray) jsObj.get(&quot;modeLengths&quot;);</span>
+<span class="fc" id="L116">            this.modeLengths = modeLengths;</span>
+
+<span class="fc" id="L118">        }catch(Exception e){</span>
+<span class="fc" id="L119">            e.printStackTrace();</span>
+<span class="fc" id="L120">        }</span>
+<span class="fc" id="L121">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

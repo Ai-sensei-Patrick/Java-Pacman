@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Waka.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">Waka.java</span></div><h1>Waka.java</h1><pre class="source lang-java linenums">package ghost;
+import processing.core.PImage;
+import processing.core.PApplet;
+import java.util.*;
+
+public class Waka implements Character{
+    private long speed;
+    private PImage currentImage;
+    private PImage leftImage;
+    private PImage rightImage;
+    private PImage upImage;
+    private PImage downImage;
+    private PImage closeImage;
+    private long lives;
+    private int yVariable;
+    private int xVariable;
+    private int xPixels;
+    private int yPixels;
+    private String direction;
+    private String fDirection;
+    private boolean isSuper;
+    private boolean isSoda;
+    private int frameRate;
+    private int fruitEaten;
+    private int startX;
+    private int startY;
+
+    /**
+     * Store waka intial position, waka x/y pixels, all image of waka in different direction, waka current image,
+     * waka lives, frameRate, fruit eaten by waka, boolean when superfruit being eaten, waka speed, waka x/y coordinate,
+     * direction of waka ,future direction of waka and boolean when soda being drank.
+     *
+     * @param leftImage Image of waka facing left.
+     * @param rightImage Image of waka facing right.
+     * @param upImage Image of waka facing up.
+     * @param downImage Image of waka facing down.
+     * @param closeImage Image of waka close mouth.
+     */
+<span class="fc" id="L39">    public Waka(PImage leftImage,PImage rightImage,PImage downImage,PImage upImage,PImage closeImage){</span>
+<span class="fc" id="L40">        this.leftImage = leftImage;</span>
+<span class="fc" id="L41">        this.rightImage = rightImage;</span>
+<span class="fc" id="L42">        this.upImage = upImage;</span>
+<span class="fc" id="L43">        this.downImage = downImage;</span>
+<span class="fc" id="L44">        this.closeImage = closeImage;</span>
+<span class="fc" id="L45">        this.currentImage = this.closeImage;</span>
+<span class="fc" id="L46">        this.speed = 0;</span>
+<span class="fc" id="L47">        this.lives = 0;</span>
+<span class="fc" id="L48">        this.yPixels = 0;</span>
+<span class="fc" id="L49">        this.xPixels = 0;</span>
+<span class="fc" id="L50">        this.xVariable = 0;</span>
+<span class="fc" id="L51">        this.yVariable = 0;</span>
+<span class="fc" id="L52">        this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L53">        this.fDirection = null;</span>
+<span class="fc" id="L54">        this.frameRate = 0;</span>
+<span class="fc" id="L55">        this.isSoda = false;</span>
+<span class="fc" id="L56">        this.isSuper = false;</span>
+<span class="fc" id="L57">        this.fruitEaten = 0;</span>
+<span class="fc" id="L58">        this.startX = 0;</span>
+<span class="fc" id="L59">        this.startY = 0;</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Return true if waka drank the soda, otherwise false.
+     *
+     * @return true for of waka drank soda, otherwise false.
+     */
+    public boolean getIsSoda(){
+<span class="fc" id="L68">        return this.isSoda;</span>
+    }
+
+    /**
+     * Set number of fruit eaten by waka
+     *
+     * @param fruits number of fruits.
+     */
+    public void setFruitEaten(int fruits){
+<span class="fc" id="L77">        this.fruitEaten = fruits;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Set waka lives.
+     *
+     * @param lives number of waka lives.
+     */
+    public void setLives(int lives){
+<span class="fc" id="L86">        this.lives = lives;</span>
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * Set waka has drank soda.
+     *
+     * @param bol boolean to indicate waka has drank the soda.
+     */
+    public void setIsSoda(boolean bol){
+<span class="fc" id="L95">        this.isSoda = bol;</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Return waka framerate
+     *
+     * @return waka framerate
+     */
+    public int getFrameRate(){
+<span class="fc" id="L104">        return this.frameRate;</span>
+    }
+
+    /**
+     * Set waka direction.
+     *
+     * @param direction set waka direction.
+     */
+    public void setDirection(String direction){
+<span class="fc" id="L113">        this.direction = direction;</span>
+<span class="fc" id="L114">    }</span>
+
+    /**
+     * Return waka future direction.
+     * 
+     * @return waka future direction.
+     */
+    public String getfDirection(){
+<span class="fc" id="L122">        return this.fDirection;</span>
+    }
+
+    /**
+     * Set waka yCoordinate.
+     * 
+     * @param yVariable yCoordinate of waka.
+     */
+    public void setY(int yVariable){
+<span class="fc" id="L131">        this.yVariable = yVariable;</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Set waka yCoordinate.
+     * 
+     * @param xVariable yCoordinate of waka.
+     */
+    public void setX(int xVariable){
+<span class="fc" id="L140">        this.xVariable = xVariable;</span>
+<span class="fc" id="L141">    }</span>
+
+    /**
+     * Return direction of waka.
+     *
+     * @return Waka direction.
+     */
+    public String getDirection(){
+<span class="fc" id="L149">        return this.direction;</span>
+    }
+
+    /**
+     * Return number of waka Xpixels.
+     *
+     * @return Number of waka Xpixels.
+     */
+    public int getPixelsX(){
+<span class="fc" id="L158">        return this.xPixels;</span>
+    }
+
+    /**
+     * Return number of waka Ypixels.
+     *
+     * @return Number of waka Ypixels.
+     */
+    public int getPixelsY(){
+<span class="fc" id="L167">        return this.yPixels;</span>
+    }
+
+    /**
+     * Return Xtile/Xcoordinate of waka based on the grid.
+     *
+     * @return Xtile/Xcoordinate of waka.
+     */
+    public int getX(){
+<span class="fc" id="L176">        return this.xVariable;</span>
+    }
+
+    /**
+     * Return Ytile/Ycoordinate of waka based on the grid.
+     *
+     * @return Ytile/Ycoordinate of waka.
+     */
+    public int getY(){
+<span class="fc" id="L185">        return this.yVariable;</span>
+    }
+
+    /**
+     * Return boolean, whether waka has eaten superfruit.
+     *
+     * @return Boolean indicating superfruit are eaten.
+     */
+    public boolean getIsSuper(){
+<span class="fc" id="L194">        return this.isSuper;</span>
+    }
+
+    /**
+     * Return number of fruit eaten by waka.
+     *
+     * @return Number of fruit eaten.
+     */
+    public int getfruitEaten(){
+<span class="fc" id="L203">        return this.fruitEaten;</span>
+    }
+
+    /**
+     * Take JsonParser Object which created by reading the .JSON file.
+     * From the JsonParser Object get speed of waka and waka lives.
+     * 
+     * @param parse Object that reads and contain all of the information from the config file
+     */
+    public void setConfig (JsonParser parse){
+<span class="fc" id="L213">        this.speed = parse.getSpeed();</span>
+<span class="fc" id="L214">        this.lives = parse.getLives();</span>
+<span class="fc" id="L215">    }</span>
+    
+    /**
+     * Set isSuper to true when the waka eaten a superfruit.
+     *
+     * @param isSuper Boolean to indicate waka eaten a superfruit.
+     */
+    public void setIsSuper(boolean isSuper){
+<span class="fc" id="L223">        this.isSuper = isSuper;</span>
+<span class="fc" id="L224">    }</span>
+
+    /**
+     * Return waka lives.
+     *
+     * @return Number of waka lives.
+     */
+    public long getLives(){
+<span class="fc" id="L232">        return this.lives;</span>
+    }
+
+    /**
+     * Return true if xPixels and yPixels is equal to zero.
+     * &lt;p&gt;
+     * Return false if xPixels and yPixels is not equal to zero.
+     *
+     * @return true if equal otherwise false.
+     */
+    public boolean pixelCheck(){
+<span class="fc bfc" id="L243" title="All 4 branches covered.">        if(this.xPixels == 0 &amp;&amp; this.yPixels == 0){</span>
+<span class="fc" id="L244">            return true;</span>
+        }
+<span class="fc" id="L246">        return false;</span>
+    }
+
+    /**
+     * Set waka initial position by finding 'p' symbol in the char[][].
+     * &lt;p&gt;
+     * This starting position stored in instance variable labelled startX and startY.
+     * This allow us to access them, when waka collide with the ghost.
+     *
+     * @param map Object where walls and fruit being placed, stored and contain initial coordinates of movable object.
+     */
+    public void setWakaPosition(Map map){
+<span class="fc" id="L258">        char[][] grid = map.getMapLayout();</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        for(int i = 0; i &lt; grid.length; i++){</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">            for(int j = 0; j &lt; grid[i].length; j++){</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">                if (grid[i][j] == 'p'){</span>
+<span class="fc" id="L262">                    this.xVariable = j;</span>
+<span class="fc" id="L263">                    this.yVariable = i;</span>
+<span class="fc" id="L264">                    this.startX = j;</span>
+<span class="fc" id="L265">                    this.startY = i;</span>
+                }
+            }
+        }
+<span class="fc" id="L269">    }</span>
+
+    /**
+     * This method set different graphic based on waka direction and waka frame rate.
+     * &lt;p&gt;
+     * To make the open-close graphic for waka, this method alternate between the open waka and close waka every 8 second.
+     */
+    public void setGraphic(){
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        if (this.direction.equals(&quot;Left&quot;)){</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">            if(this.frameRate % 16 == 0){</span>
+<span class="fc" id="L279">                this.currentImage = this.closeImage;</span>
+            }
+<span class="fc bfc" id="L281" title="All 2 branches covered.">            else if(this.frameRate % 8 == 0){</span>
+<span class="fc" id="L282">                this.currentImage = this.leftImage;</span>
+            }
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        }else if(this.direction.equals(&quot;Right&quot;)){</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            if(this.frameRate % 16 == 0){</span>
+<span class="fc" id="L286">                this.currentImage = this.closeImage;</span>
+            }
+<span class="fc bfc" id="L288" title="All 2 branches covered.">            else if(this.frameRate % 8 == 0){</span>
+<span class="fc" id="L289">                this.currentImage = this.rightImage;</span>
+            }
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        }else if(this.direction.equals(&quot;Down&quot;)){</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">            if(this.frameRate % 16 == 0){</span>
+<span class="fc" id="L293">                this.currentImage = this.closeImage;</span>
+            }
+<span class="fc bfc" id="L295" title="All 2 branches covered.">            else if(this.frameRate % 8 == 0){</span>
+<span class="fc" id="L296">                this.currentImage = this.downImage;</span>
+            }
+        }else{
+<span class="fc bfc" id="L299" title="All 2 branches covered.">            if(this.frameRate % 16 == 0){</span>
+<span class="fc" id="L300">                this.currentImage = this.closeImage;</span>
+            }
+<span class="fc bfc" id="L302" title="All 2 branches covered.">            else if(this.frameRate % 8 == 0){</span>
+<span class="fc" id="L303">                this.currentImage = this.upImage;</span>
+            }
+        }
+<span class="fc" id="L306">    }</span>
+
+    /**
+     * Reset waka, when waka collide with a normal mode ghost.
+     * &lt;p&gt;
+     * Reset waka : Xcoordinate/tile to 0, Ycoordinate/tile to 0, waka direction to &quot;Left&quot;, framerate to 0,
+     * &lt;p&gt;
+     * futureDirection to null, xPixel to 0, yPixel to 0, decrease waka live by 1.
+     */
+    public void reset(){
+<span class="fc" id="L316">        this.xVariable = this.startX;</span>
+<span class="fc" id="L317">        this.yVariable = this.startY;</span>
+<span class="fc" id="L318">        this.xPixels = 0;</span>
+<span class="fc" id="L319">        this.yPixels = 0;</span>
+<span class="fc" id="L320">        this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L321">        this.frameRate = 0;</span>
+<span class="fc" id="L322">        this.fDirection = null;</span>
+<span class="fc" id="L323">        this.lives -= 1;</span>
+<span class="fc" id="L324">    }</span>
+
+
+    /**
+     * This method check the next tile, whether if its a solid or not.
+     * If its not a solid the waka is allowed to add/subtract its xPixels/yPixels (based on waka direction).
+     * &lt;p&gt;
+     * If xPixels/yPixels have reach 16 ,it reset back the pixels to 0 and add/subtract Xcoordinate/Ycoordinate of waka by speed of waka (based on waka direction).
+     * &lt;p&gt;
+     * If waka has reach 8 or -8 pixels check whether the tile is a fruit or not, if it is a fruit add waka fruiteaten by 1 and change tile to empty object.
+     * If the fruit eaten by waka is a superfruit , change isSuper variable to true.
+     * If soda drank by waka , change isSoda variable to true.
+     * Check if waka have future movement and set waka graphic.
+     * 
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void tick(Map map){
+
+<span class="fc" id="L342">        Entities[][] grid = map.getMapLayoutObj();</span>
+<span class="fc" id="L343">        this.setGraphic();</span>
+
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        if(this.direction.equals(&quot;Left&quot;)){</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">            if (!grid[this.yVariable][this.xVariable - 1].isSolid()){</span>
+<span class="fc" id="L347">                this.xPixels -= this.speed;</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">                if (this.xPixels / 8 == -1){</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable - 1].isSuper()){</span>
+<span class="fc" id="L350">                        this.isSuper = true;</span>
+                    }
+<span class="fc bfc" id="L352" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable - 1].isSoda()){</span>
+<span class="fc" id="L353">                        this.isSoda = true;</span>
+                    }
+<span class="fc bfc" id="L355" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable - 1].isFruit()){</span>
+<span class="fc" id="L356">                        grid[this.yVariable][this.xVariable - 1] = new Empty(null,this.xVariable,this.yVariable,false);</span>
+<span class="fc" id="L357">                        this.fruitEaten += 1;</span>
+                    }
+                }
+<span class="pc bpc" id="L360" title="1 of 4 branches missed.">                if (this.xPixels % 16 == 0 &amp;&amp; this.xPixels != 0){</span>
+<span class="fc" id="L361">                    this.xPixels = 0;</span>
+<span class="fc" id="L362">                    this.xVariable -= 1;</span>
+                }
+            }
+        }
+
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        else if (this.direction.equals(&quot;Right&quot;)){</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">            if (!grid[this.yVariable][this.xVariable + 1].isSolid()){</span>
+<span class="fc" id="L369">                this.xPixels += this.speed;</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">                if (this.xPixels / 8 == 1){</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable + 1].isSuper()){</span>
+<span class="fc" id="L372">                        this.isSuper = true;</span>
+                    }
+<span class="fc bfc" id="L374" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable + 1].isSoda()){</span>
+<span class="fc" id="L375">                        this.isSoda = true;</span>
+                    }
+<span class="fc bfc" id="L377" title="All 2 branches covered.">                    if(grid[this.yVariable][this.xVariable + 1].isFruit()){</span>
+<span class="fc" id="L378">                        grid[this.yVariable][this.xVariable + 1] = new Empty(null,this.xVariable,this.yVariable,false);</span>
+<span class="fc" id="L379">                        this.fruitEaten += 1;</span>
+                    }
+                }
+<span class="pc bpc" id="L382" title="1 of 4 branches missed.">                if (this.xPixels % 16 == 0 &amp;&amp; this.xPixels != 0){</span>
+<span class="fc" id="L383">                    this.xPixels = 0;</span>
+<span class="fc" id="L384">                    this.xVariable += 1;</span>
+                }
+            }
+        }
+
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        else if (this.direction.equals(&quot;Up&quot;)){</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">            if (!grid[this.yVariable - 1][this.xVariable].isSolid()){</span>
+<span class="fc" id="L391">                this.yPixels -= this.speed;</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">                if (this.yPixels / 8 == -1){</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">                    if(grid[this.yVariable - 1][this.xVariable].isSuper()){</span>
+<span class="fc" id="L394">                        this.isSuper = true;</span>
+                    }
+<span class="fc bfc" id="L396" title="All 2 branches covered.">                    if(grid[this.yVariable - 1][this.xVariable].isSoda()){</span>
+<span class="fc" id="L397">                        this.isSoda = true;</span>
+                    }
+<span class="fc bfc" id="L399" title="All 2 branches covered.">                    if(grid[this.yVariable - 1][this.xVariable].isFruit()){</span>
+<span class="fc" id="L400">                        grid[this.yVariable - 1][this.xVariable] = new Empty(null,this.xVariable,this.yVariable,false);</span>
+<span class="fc" id="L401">                        this.fruitEaten += 1;</span>
+                    }
+                }
+<span class="pc bpc" id="L404" title="1 of 4 branches missed.">                if (this.yPixels % 16 == 0 &amp;&amp; this.yPixels != 0){</span>
+<span class="fc" id="L405">                    this.yPixels = 0;</span>
+<span class="fc" id="L406">                    this.yVariable -= 1;</span>
+                }
+            }
+        }
+
+        else {
+<span class="fc bfc" id="L412" title="All 2 branches covered.">            if (!grid[this.yVariable + 1][this.xVariable].isSolid()){</span>
+<span class="fc" id="L413">                this.yPixels += this.speed;</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">                if (this.yPixels / 8 == 1){</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">                    if(grid[this.yVariable + 1][this.xVariable].isSuper()){</span>
+<span class="fc" id="L416">                        this.isSuper = true;</span>
+                    }
+<span class="fc bfc" id="L418" title="All 2 branches covered.">                    if(grid[this.yVariable + 1][this.xVariable].isSoda()){</span>
+<span class="fc" id="L419">                        this.isSoda = true;</span>
+                    }
+<span class="fc bfc" id="L421" title="All 2 branches covered.">                    if(grid[this.yVariable + 1][this.xVariable].isFruit()){</span>
+<span class="fc" id="L422">                        grid[this.yVariable + 1][this.xVariable] = new Empty(null,this.xVariable,this.yVariable,false);</span>
+<span class="fc" id="L423">                        this.fruitEaten += 1;</span>
+                    }
+                }
+<span class="pc bpc" id="L426" title="1 of 4 branches missed.">                if (this.yPixels % 16 == 0 &amp;&amp; this.yPixels != 0){</span>
+<span class="fc" id="L427">                    this.yPixels = 0;</span>
+<span class="fc" id="L428">                    this.yVariable += 1;</span>
+                }
+            }
+        }
+<span class="fc" id="L432">        this.checkNextMove(map);</span>
+<span class="fc" id="L433">        this.frameRate += 1;</span>
+<span class="fc" id="L434">    }</span>
+
+    /**
+     * The method check if left tile from waka is solid or not, if left tile is not a solid waka can turn, but this happen only if the both pixels has turn to zero.
+     * If the condition required is not fulfilled the move inputed is stored in future direction.
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void moveLeft(Map map){
+<span class="fc" id="L443">        Entities[][] mapObj = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L444" title="All 4 branches covered.">        if (!mapObj[this.yVariable][this.xVariable - 1].isSolid() &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L445">            this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L446">            this.frameRate = 8;</span>
+<span class="fc" id="L447">            this.fDirection = null;</span>
+        }else{
+<span class="fc" id="L449">            this.fDirection = &quot;Left&quot;;</span>
+        }
+<span class="fc" id="L451">    }</span>
+
+    /**
+     * The method check if right tile from waka is solid or not, if right tile is not a solid waka can turn, but this happen only if the both pixels has turn to zero.
+     * If the condition required is not fulfilled the move inputed is stored in future direction.
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void moveRight(Map map){
+<span class="fc" id="L460">        Entities[][] mapObj = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L461" title="All 4 branches covered.">        if (!mapObj[this.yVariable][this.xVariable + 1].isSolid() &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L462">            this.direction = &quot;Right&quot;;</span>
+<span class="fc" id="L463">            this.frameRate = 8;</span>
+<span class="fc" id="L464">            this.fDirection = null;</span>
+        }else{
+<span class="fc" id="L466">            this.fDirection = &quot;Right&quot;;</span>
+        }
+<span class="fc" id="L468">    }</span>
+
+    /**
+     * The method check if Up tile from waka is solid or not, if Up tile is not a solid waka can turn, but this happen only if the both pixels has turn to zero.
+     * If the condition required is not fulfilled the move inputed is stored in future direction.
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void moveUp(Map map){
+<span class="fc" id="L477">        Entities[][] mapObj = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L478" title="All 4 branches covered.">        if (!mapObj[this.yVariable - 1][this.xVariable].isSolid() &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L479">            this.direction = &quot;Up&quot;;</span>
+<span class="fc" id="L480">            this.frameRate = 8;</span>
+<span class="fc" id="L481">            this.fDirection = null;</span>
+        }else{
+<span class="fc" id="L483">            this.fDirection = &quot;Up&quot;;</span>
+        }
+<span class="fc" id="L485">    }</span>
+
+    /**
+     * The method check if Down tile from waka is solid or not, if Down tile is not a solid waka can turn, but this happen only if the both pixels has turn to zero.
+     * If the condition required is not fulfilled the move inputed is stored in future direction.
+     *
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void moveDown(Map map){
+<span class="fc" id="L494">        Entities[][] mapObj = map.getMapLayoutObj();</span>
+<span class="fc bfc" id="L495" title="All 4 branches covered.">        if (!mapObj[this.yVariable + 1][this.xVariable].isSolid() &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L496">            this.direction = &quot;Down&quot;;</span>
+<span class="fc" id="L497">            this.frameRate = 8;</span>
+<span class="fc" id="L498">            this.fDirection = null;</span>
+        }else{
+<span class="fc" id="L500">            this.fDirection = &quot;Down&quot;;</span>
+        }
+<span class="fc" id="L502">    }</span>
+    
+    /**
+     * This method check whether future direction can be applied to current direction.
+     * Waka only allowed to change direction if the next tile (based on direction) is not a solid and pixels are zero.
+     * &lt;p&gt;
+     * Reset future direction back to null, if future direction successfully applied.
+     * 
+     * @param map Object where walls and fruit being placed, stored and use as background for the waka.
+     */
+    public void checkNextMove(Map map){
+<span class="fc" id="L513">        Entities[][] grid = map.getMapLayoutObj();</span>
+
+<span class="fc bfc" id="L515" title="All 2 branches covered.">        if(!(this.fDirection == null)){</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">            if (this.fDirection.equals(&quot;Left&quot;)){</span>
+<span class="fc bfc" id="L517" title="All 4 branches covered.">                if (!(grid[this.yVariable][this.xVariable - 1].isSolid()) &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L518">                    this.direction = &quot;Left&quot;;</span>
+<span class="fc" id="L519">                    this.fDirection = null;</span>
+                }
+            }
+            
+<span class="fc bfc" id="L523" title="All 2 branches covered.">            else if (this.fDirection.equals(&quot;Right&quot;)){</span>
+<span class="fc bfc" id="L524" title="All 4 branches covered.">                if (!(grid[this.yVariable][this.xVariable + 1].isSolid()) &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L525">                    this.direction = &quot;Right&quot;;</span>
+<span class="fc" id="L526">                    this.fDirection = null;</span>
+                }
+            }
+
+<span class="fc bfc" id="L530" title="All 2 branches covered.">            else if (this.fDirection.equals(&quot;Up&quot;)){</span>
+<span class="fc bfc" id="L531" title="All 4 branches covered.">                if (!(grid[this.yVariable - 1][this.xVariable].isSolid()) &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L532">                    this.direction = &quot;Up&quot;;</span>
+<span class="fc" id="L533">                    this.fDirection = null;</span>
+                }
+            }
+
+            else{
+<span class="fc bfc" id="L538" title="All 4 branches covered.">                if (!grid[this.yVariable + 1][this.xVariable].isSolid() &amp;&amp; this.pixelCheck()){</span>
+<span class="fc" id="L539">                    this.direction = &quot;Down&quot;;</span>
+<span class="fc" id="L540">                    this.fDirection = null;    </span>
+                }
+            }
+        }
+<span class="fc" id="L544">    }</span>
+
+    /**
+     * Draw waka in correct position, for X axis : Xcoordinate * 16 add by their Xpixels subtract offset, for Y axis : Ycoordinate * 16 add by Ypixels subtract offset.
+     * &lt;p&gt;
+     * Draw waka  lives at the bottom of the map.
+     * @param app PApplet object.
+     */
+    public void draw(PApplet app){
+<span class="fc" id="L553">        app.image(this.currentImage,(this.xVariable * 16 + this.xPixels) - 4,(this.yVariable * 16 + this.yPixels) - 4);</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">        for (int i = 0; i &lt; this.lives; i++){</span>
+<span class="fc" id="L555">            app.image(this.rightImage,((i * 2) * 16) - (i * 8) + 8,34 * 16);</span>
+        }
+<span class="fc" id="L557">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

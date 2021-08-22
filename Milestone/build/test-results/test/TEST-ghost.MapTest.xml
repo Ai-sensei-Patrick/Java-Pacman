@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ghost.MapTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-11-21T15:22:14" hostname="DESKTOP-JR70JIC" time="0.004">
+  <properties/>
+  <testcase name="getterMethod()" classname="ghost.MapTest" time="0.001"/>
+  <testcase name="testMapCharToObject()" classname="ghost.MapTest" time="0.002"/>
+  <testcase name="testMapToChar()" classname="ghost.MapTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

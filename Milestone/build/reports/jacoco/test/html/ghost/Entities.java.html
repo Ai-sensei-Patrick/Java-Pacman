@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Entities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">Entities.java</span></div><h1>Entities.java</h1><pre class="source lang-java linenums">package ghost;
+import processing.core.PApplet;
+import processing.core.PImage;
+
+
+public class Entities{
+    /**
+     * Xcoordinate of the Entities Object.
+     */
+    protected int x;
+    /**
+     * Ycoordinate of the Entities Object.
+     */
+    protected int y;
+    /**
+     * Image of the Entities Object.
+     */
+    protected PImage image;
+    /**
+     * Boolean to indicate is the Entities Object a solid.
+     */
+    protected boolean solid;
+    /**
+     * Boolean to indicate is the Entities Object a SuperFruit.
+     */
+    protected boolean isSuper;
+    /**
+     * Boolean to indicate is the Entities Object a Soda.
+     */
+    protected boolean isSoda;
+    /**
+     * Boolean to indicate is the Entities Object a Fruit.
+     */
+    protected boolean isFruit;
+
+    /**
+     * Store Entities Object Xcoordinate, Ycoordinate, image of the Entities Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Entities Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Entities Object.
+     * @param y Ycoordinate of the Entities Object.
+     */
+<span class="fc" id="L45">    public Entities(PImage image, int x, int y, boolean solid){</span>
+<span class="fc" id="L46">        this.x = x;</span>
+<span class="fc" id="L47">        this.y = y;</span>
+<span class="fc" id="L48">        this.image = image;</span>
+<span class="fc" id="L49">        this.solid = solid;</span>
+<span class="fc" id="L50">        this.isSuper = false;</span>
+<span class="fc" id="L51">        this.isFruit = false;</span>
+<span class="fc" id="L52">        this.isSoda = false;</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Return xCoordinate of the Entities Object.
+     * 
+     * @return xCoordinate of the Entities Object.
+     */
+    public int getX(){
+<span class="fc" id="L61">        return this.x;</span>
+    }
+
+    /**
+     * Return yCoordinate of the Entities Object.
+     * 
+     * @return yCoordinate of the Entities Object.
+     */
+    public int getY(){
+<span class="fc" id="L70">        return this.y;</span>
+    }
+
+    /**
+     * Return image of the Entities Object.
+     * 
+     * @return image of the Entities Object.
+     */
+    public PImage getImage(){
+<span class="fc" id="L79">        return this.image;</span>
+    }
+
+    /**
+     * Return true if the Entities Object is a solid , otherwise false.
+     * 
+     * @return Return true if the Entities Object is a solid , otherwise false.
+     */
+    public boolean isSolid(){
+<span class="fc" id="L88">        return this.solid;</span>
+    }
+
+    /**
+     * Return true if the Entities Object is a superFruit , otherwise false.
+     * 
+     * @return true if the Entities Object is a superFruit , otherwise false.
+     */
+    public boolean isSuper(){
+<span class="fc" id="L97">        return this.isSuper;</span>
+    }
+
+    /**
+     * Return true if the Entities Object is a fruit , otherwise false.
+     * 
+     * @return true if the Entities Object is a fruit , otherwise false.
+     */
+    public boolean isFruit(){
+<span class="fc" id="L106">        return this.isFruit;</span>
+    }
+
+    /**
+     * Return true if the Entities Object is a soda , otherwise false.
+     * 
+     * @return true if the Entities Object is a soda , otherwise false.
+     */
+    public boolean isSoda(){
+<span class="fc" id="L115">        return this.isSoda;</span>
+    }
+}
+
+class Empty extends Entities{
+    /**
+     * Store Empty Object Xcoordinate, Ycoordinate, image of the Empty Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Empty Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Empty Object.
+     * @param y Ycoordinate of the Empty Object.
+     */
+    public Empty(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L130">        super(image,x,y,solid);</span>
+<span class="fc" id="L131">    }</span>
+}
+
+class DownLeft extends Entities{
+    /**
+     * Store DownLeft Object Xcoordinate, Ycoordinate, image of the DownLeft Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each DownLeft Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the DownLeft Object.
+     * @param y Ycoordinate of the DownLeft Object.
+     */
+    public DownLeft(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L145">        super(image,x,y,solid);</span>
+<span class="fc" id="L146">    }</span>
+}
+
+class DownRight extends Entities{
+    /**
+     * Store DownRight Object Xcoordinate, Ycoordinate, image of the DownRight Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each DownRight Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the DownRight Object.
+     * @param y Ycoordinate of the DownRight Object.
+     */
+    public DownRight(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L160">        super(image,x,y,solid);</span>
+<span class="fc" id="L161">    }</span>
+} 
+
+class Fruit extends Entities{
+    private boolean isSuper;
+    /**
+     * Store Fruit Object Xcoordinate, Ycoordinate, image of the Fruit Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Fruit Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Fruit Object.
+     * @param y Ycoordinate of the Fruit Object.
+     */
+    public Fruit(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L176">        super(image,x,y,solid);</span>
+<span class="fc" id="L177">        this.isFruit = true;</span>
+<span class="fc" id="L178">    }</span>
+}
+
+class SuperFruit extends Entities{
+    /**
+     * Store SuperFruit Object Xcoordinate, Ycoordinate, image of the SuperFruit Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each SuperFruit Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the SuperFruit Object.
+     * @param y Ycoordinate of the SuperFruit Object.
+     */
+    public SuperFruit(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L192">        super(image,x,y,solid);</span>
+<span class="fc" id="L193">        this.isSuper = true;</span>
+<span class="fc" id="L194">        this.isFruit = true;</span>
+<span class="fc" id="L195">    }</span>
+}
+
+class Horizontal extends Entities{
+    /**
+     * Store Horizontal Object Xcoordinate, Ycoordinate, image of the Horizontal Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Horizontal Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Horizontal Object.
+     * @param y Ycoordinate of the Horizontal Object.
+     */
+    public Horizontal(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L209">        super(image,x,y,solid);</span>
+<span class="fc" id="L210">    }</span>
+}
+
+class UpLeft extends Entities{
+    /**
+     * Store UpLeft Object Xcoordinate, Ycoordinate, image of the UpLeft Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each UpLeft Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the UpLeft Object.
+     * @param y Ycoordinate of the UpLeft Object.
+     */
+    public UpLeft(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L224">        super(image,x,y,solid);</span>
+<span class="fc" id="L225">    }</span>
+}
+
+class UpRight extends Entities{
+    /**
+     * Store UpRight Object Xcoordinate, Ycoordinate, image of the UpRight Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each UpRight Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the UpRight Object.
+     * @param y Ycoordinate of the UpRight Object.
+     */
+    public UpRight(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L239">        super(image,x,y,solid);</span>
+<span class="fc" id="L240">    }</span>
+}
+
+class Vertical extends Entities{
+    /**
+     * Store Vertical Object Xcoordinate, Ycoordinate, image of the Vertical Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Vertical Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Vertical Object.
+     * @param y Ycoordinate of the Vertical Object.
+     */
+    public Vertical(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L254">        super(image,x,y,solid);</span>
+<span class="fc" id="L255">    }</span>
+}
+
+class Soda extends Entities{
+    /**
+     * Store Soda Object Xcoordinate, Ycoordinate, image of the Soda Object, boolean indicate solid,
+     * boolean indicate superFruit, boolean indicate soda and boolean indicate fruit.
+     *
+     * @param image Image of each Soda Object.
+     * @param solid Boolean that indicate a solid.
+     * @param x Xcoordinate of the Soda Object.
+     * @param y Ycoordinate of the Soda Object.
+     */
+    public Soda(PImage image, int x, int y, boolean solid){
+<span class="fc" id="L269">        super(image,x,y,solid);</span>
+<span class="fc" id="L270">        this.isSoda = true;</span>
+<span class="fc" id="L271">        this.isFruit = true;</span>
+<span class="fc" id="L272">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

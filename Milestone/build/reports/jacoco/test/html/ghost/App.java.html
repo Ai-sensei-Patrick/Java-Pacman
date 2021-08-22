@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Milestone</a> &gt; <a href="index.source.html" class="el_package">ghost</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package ghost;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+
+public class App extends PApplet{
+
+    public static final int WIDTH = 448;
+    public static final int HEIGHT = 576;
+
+    private GameManager gameManager;
+
+    /**
+     * Create a new GameManager Object.
+     */
+<span class="fc" id="L16">    public App() {</span>
+        //Set up your objects
+<span class="fc" id="L18">        this.gameManager = new GameManager();</span>
+<span class="fc" id="L19">    }</span>
+
+    /**
+     * Set Up a GameManager Object that contain all of the object in the game
+     */
+    public void setup(){
+<span class="fc" id="L25">        frameRate(60);</span>
+<span class="fc" id="L26">        this.gameManager.readFile(&quot;config.json&quot;);</span>
+<span class="fc" id="L27">        this.gameManager.setUp(this);</span>
+<span class="fc" id="L28">    }</span>
+
+    public void settings() {
+<span class="fc" id="L31">        size(WIDTH, HEIGHT);</span>
+<span class="fc" id="L32">    }</span>
+    
+    /**
+     * Handle and detect user input ,user press (Up, Down, Left, Right).
+     */
+    public void keyPressed(){
+<span class="nc" id="L38">        this.gameManager.keyPressed(this);</span>
+<span class="nc" id="L39">    }</span>
+
+    /**
+     * Draw all the Object contained inside the game manager
+     */
+    public void draw(){
+<span class="fc" id="L45">        background(0,0,0);</span>
+<span class="fc" id="L46">        this.gameManager.draw(this);</span>
+<span class="fc" id="L47">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L50">        PApplet.main(&quot;ghost.App&quot;);</span>
+<span class="nc" id="L51">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
